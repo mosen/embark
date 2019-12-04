@@ -1,0 +1,38 @@
+version: "3.7"
+services:
+  admin:
+    build: ./admin
+    image: embark-admin:latest
+    environment:
+      MICRONAUT_SERVER_HOST: admin
+    ports:
+      - 8090:8090
+  connect:
+    build: ./connect
+    image: embark-connect:latest
+    environment:
+      MICRONAUT_SERVER_HOST: connect
+    ports:
+      - 8090:8090
+  schemaregistry:
+    build: ./schemaregistry
+    image: embark-schemaregistry:latest
+    environment:
+      MICRONAUT_SERVER_HOST: schemaregistry
+    ports:
+      - 8090:8090
+  ksql:
+    build: ./ksql
+    image: embark-ksql:latest
+    environment:
+      MICRONAUT_SERVER_HOST: ksql
+    ports:
+      - 8090:8090
+  frontend:
+    build: ./frontend
+    image: embark-frontend:latest
+    ports:
+      - 8090:8090
+
+networks:
+  backend:

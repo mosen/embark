@@ -1,0 +1,43 @@
+## Common
+
+# This prefix is prepended to routes across all services when supplied.
+api:
+  base-path: "/api"
+
+
+## Admin Service
+#  -------------
+# NOTE: Where possible, we support the configuration variables declared for micronaut-kafka in their Consumer/Producer
+# implementation to retain portability of config.
+# See Also: https://micronaut-projects.github.io/micronaut-kafka/1.1.x/guide/index.html
+kafka:
+
+  bootstrap:
+    servers: localhost:9092
+  #  ssl:
+  #    keystore:
+  #      location: /path/to/client.keystore.p12
+  #      password: secret
+  #    truststore:
+  #      location: /path/to/client.truststore.jks
+  #      password: secret
+  #      type: PKCS12
+  #  security:
+  #    protocol: ssl
+
+## Connect Service
+#  ---------------
+#kafka:
+  connect:
+    url: http://localhost:8083/
+
+## Schema Registry Service
+#  -----------------------
+  #kafka:
+  registry:
+    url: http://localhost:8081/
+
+## KSQL Service
+#  ------------
+  ksql:
+    url: http://localhost:8082/

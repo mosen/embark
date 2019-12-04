@@ -1,0 +1,6 @@
+rootProject.name = 'embark'
+include 'admin'
+include 'connect'
+include 'schemaregistry'
+include 'ksql'
+include 'frontend'

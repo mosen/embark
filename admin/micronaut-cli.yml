@@ -1,0 +1,5 @@
+profile: service
+defaultPackage: embark.api.admin
+---
+testFramework: junit
+sourceLanguage: java

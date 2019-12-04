@@ -1,0 +1,24 @@
+//// Used for text against the sky blue colour
+//$darkblue: #0F1E41;
+//// Used for secondary background areas such as navigation
+//$skyblue: #CEDBEF;
+//// Used for highlights in secondary areas as above
+//$powderblue: #E3EBF4;
+//
+//// Used for highlight or contrast only
+//$red: #CE504C;
+//
+//// content area background light gray
+//$lightgray: #F5F5F5;
+//
+//// content area "sunken" or highlighted items dark gray
+//$darkgray: #E5E5E5;
+//
+//.v-list-item--active {
+//  background-color: $powderblue;
+//  //border-top: 1px solid $skyblue;
+//  border-left: 3px solid $darkblue;
+//  padding-left: 13px; // to prevent the border pushing content right
+//
+//  box-shadow: darken($skyblue, 10) 1px 2px 4px;
+//}

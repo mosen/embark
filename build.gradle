@@ -1,0 +1,12 @@
+
+
+buildscript {
+}
+
+subprojects { project ->
+
+    if(!project.path.contains(':frontend')) {
+
+
+    }
+}

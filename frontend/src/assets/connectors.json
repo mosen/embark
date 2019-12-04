@@ -1,0 +1,188 @@
+{
+  "plugins": {
+    "io.confluent.connect.activemq.ActiveMQSourceConnector": {
+      "title": "Kafka Connect ActiveMQ Source",
+      "description": "The ActiveMQ Source Connector is used to read messages from an ActiveMQ cluster and write them to a Kafka topic.\n\nIt is included in <a href=\"https://www.confluent.io/product/confluent-enterprise/\">Confluent Enterprise Platform</a>, or can be downloaded and installed separately. It can be used for free for 30 days, but after that does require an Enterprise license. <a href=\"https://www.confluent.io/contact/\">Contact Confluent</a> for more details.",
+      "logo": "/assets/connectors/activemq.png",
+      "owner": {
+        "username": "confluentinc",
+        "type": "Organization",
+        "name": "Confluent, Inc.",
+        "url": "http://confluent.io",
+        "logo": null
+      }
+    },
+    "io.confluent.connect.elasticsearch.ElasticsearchSinkConnector": {
+      "title": "Kafka Connect Elasticsearch",
+      "description": "The Elasticsearch connector allows moving data from Kafka to Elasticsearch. It writes data from a topic in Kafka to an index in Elasticsearch and all data for a topic have the same type.\n\nElasticsearch is often used for text queries, analytics and as an key-value store (use cases). The connector covers both the analytics and key-value store use cases. For the analytics use case, each message is in Kafka is treated as an event and the connector uses topic+partition+offset as a unique identifier for events, which then converted to unique documents in Elasticsearch. For the key-value store use case, it supports using keys from Kafka messages as document ids in Elasticsearch and provides configurations ensuring that updates to a key are written to Elasticsearch in order. For both use cases, Elasticsearch’s idempotent write semantics guarantees exactly once delivery.\n\nMapping is the process of defining how a document, and the fields it contains, are stored and indexed. Users can explicitly define mappings for types in indices. When a mapping is not explicitly defined, Elasticsearch can determine field names and types from data, however, some types such as timestamp and decimal, may not be correctly inferred. To ensure that the types are correctly inferred, the connector provides a feature to infer a mapping from the schemas of Kafka messages.",
+      "logo": "/assets/connectors/elasticsearch.jpg",
+      "owner": {
+        "username": "confluentinc",
+        "type": "Organization",
+        "name": "Confluent, Inc.",
+        "url": "https://confluent.io/",
+        "logo": null
+      }
+    },
+    "io.confluent.connect.ibm.mq.IbmMQSourceConnector": {
+      "title": "Kafka Connect IBM MQ Source",
+      "description": "The IBM MQ Source Connector is used to read messages from an IBM MQ cluster and write them to a Kafka topic.\n\nIt is included in <a href=\"https://www.confluent.io/product/confluent-enterprise/\">Confluent Enterprise Platform</a>, or can be downloaded and installed separately. It can be used for free for 30 days, but after that does require an Enterprise license. <a href=\"https://www.confluent.io/contact/\">Contact Confluent</a> for more details.",
+      "logo": "/assets/connectors/ibm-mq.jpg",
+      "owner": {
+        "username": "confluentinc",
+        "type": "Organization",
+        "name": "Confluent, Inc.",
+        "url": "http://confluent.io",
+        "logo": null
+      }
+    },
+    "io.confluent.connect.jdbc.JdbcSinkConnector": {
+      "title": "Kafka Connect JDBC Sink",
+      "description": "The JDBC source and sink connectors allow you to exchange data between relational databases and Kafka.\n\nThe JDBC source connector allows you to import data from any relational database with a JDBC driver into Kafka topics. By using JDBC, this connector can support a wide variety of databases without requiring custom code for each one.\n\nData is loaded by periodically executing a SQL query and creating an output record for each row in the result set. By default, all tables in a database are copied, each to its own output topic. The database is monitored for new or deleted tables and adapts automatically. When copying data from a table, the connector can load only new or modified rows by specifying which columns should be used to detect new or modified data.\n\nThe JDBC sink connector allows you to export data from Kafka topics to any relational database with a JDBC driver. By using JDBC, this connector can support a wide variety of databases without requiring a dedicated connector for each one. The connector polls data from Kafka to write to the database based on the topics subscription. It is possible to achieve idempotent writes with upserts. Auto-creation of tables, and limited auto-evolution is also supported.",
+      "logo": "/assets/connectors/jdbc.jpg",
+      "owner": {
+        "username": "confluentinc",
+        "type": "Organization",
+        "name": "Confluent, Inc.",
+        "url": "https://confluent.io/",
+        "logo": null
+      }
+    },
+    "io.confluent.connect.jdbc.JdbcSourceConnector": {
+      "title": "Kafka Connect JDBC Source",
+      "description": "The JDBC source and sink connectors allow you to exchange data between relational databases and Kafka.\n\nThe JDBC source connector allows you to import data from any relational database with a JDBC driver into Kafka topics. By using JDBC, this connector can support a wide variety of databases without requiring custom code for each one.\n\nData is loaded by periodically executing a SQL query and creating an output record for each row in the result set. By default, all tables in a database are copied, each to its own output topic. The database is monitored for new or deleted tables and adapts automatically. When copying data from a table, the connector can load only new or modified rows by specifying which columns should be used to detect new or modified data.\n\nThe JDBC sink connector allows you to export data from Kafka topics to any relational database with a JDBC driver. By using JDBC, this connector can support a wide variety of databases without requiring a dedicated connector for each one. The connector polls data from Kafka to write to the database based on the topics subscription. It is possible to achieve idempotent writes with upserts. Auto-creation of tables, and limited auto-evolution is also supported.",
+      "logo": "/assets/connectors/jdbc.jpg",
+      "owner": {
+        "username": "confluentinc",
+        "type": "Organization",
+        "name": "Confluent, Inc.",
+        "url": "https://confluent.io/",
+        "logo": null
+      }
+    },
+    "io.confluent.connect.jms.JmsSourceConnector": {
+      "title": "Kafka Connect JMS Source",
+      "description": "The Kafka Connect JMS Sink Connector integrates Kafka with JMS-compliant brokers such as ActiveMQ, Solace, TIBCO EMS, and others.\nThe connector consumes records from Kafka topic(s) and converts each record value to either a JMS <pre>TextMessage</pre> or\n<pre>BytesMessage</pre> before producing the JMS Message to the broker.\n<p>The connector does not include the client jars for the JMS system. You will have to include these in the plugin directory. See the documentation for more details on this.\n<p>Prerequisites include:\n<ol>\n<li>Kafka Broker: Confluent Platform 3.3.0 or above, or Kafka 0.11.0 or above</li>\n<li>Kafka Connect: Confluent Platform 4.1.0 or above, or Kafka 1.1.0 or above (requires header support in Connect)</li>\n<li>Java 1.8</li>\n<li>JMS 1.1+ Client Jars</li>\n</ol>",
+      "logo": "/assets/connectors/jms.jpeg",
+      "owner": {
+        "username": "confluentinc",
+        "type": "Organization",
+        "name": "Confluent, Inc.",
+        "url": "https://confluent.io/",
+        "logo": null
+      }
+    },
+    "io.confluent.connect.replicator.ReplicatorSourceConnector": {
+      "title": "Confluent Kafka Replicator",
+      "description": "Replicator allows you to easily and reliably replicate topics from one Kafka cluster to another.\nIt continuously copies the messages in multiple topics, when necessary creating the topics in the destination cluster using the same topic configuration in the source cluster.\nThis includes preserving the number of partitions, the replication factor, and any configuration overrides specified for individual topics.\n\nReplicator is included in <a href=\"https://www.confluent.io/product/confluent-enterprise/\">Confluent Enterprise Platform</a>, or can be downloaded\nand installed separately. It can be used for free for 30 days, but after that does require an Enterprise license. <a href=\"https://www.confluent.io/contact/\">Contact Confluent</a>\nfor more details.",
+      "logo": "/assets/connectors/apache-kafka.png",
+      "owner": {
+        "username": "confluentinc",
+        "type": "Organization",
+        "name": "Confluent, Inc.",
+        "url": "http://confluent.io",
+        "logo": null
+      }
+    },
+    "io.confluent.connect.s3.S3SinkConnector": {
+      "title": "Kafka Connect S3 Sink",
+      "description": "The S3 connector, currently available as a sink, allows you to export data from Kafka topics to S3 objects in either Avro or JSON formats. In addition, for certain data layouts, S3 connector exports data by guaranteeing exactly-once delivery semantics to consumers of the S3 objects it produces.\n\nBeing a sink, the S3 connector periodically polls data from Kafka and in turn uploads it to S3. A partitioner is used to split the data of every Kafka partition into chunks. Each chunk of data is represented as an S3 object, whose key name encodes the topic, the Kafka partition and the start offset of this data chunk. If no partitioner is specified in the configuration, the default partitioner which preserves Kafka partitioning is used. The size of each data chunk is determined by the number of records written to S3 and by schema compatibility.",
+      "logo": "/assets/connectors/s3.jpg",
+      "owner": {
+        "username": "confluentinc",
+        "type": "Organization",
+        "name": "Confluent, Inc.",
+        "url": "https://confluent.io/",
+        "logo": null
+      }
+    },
+    "io.confluent.kafka.connect.datagen.DatagenConnector": {
+      "title": "Kafka Connect Datagen",
+      "description": "For demos only: A Kafka Connect connector for generating mock data, not suitable for production",
+      "logo": null,
+      "owner": {
+        "username": "confluentinc",
+        "type": "Organization",
+        "name": "Confluent, Inc.",
+        "url": "https://confluent.io/",
+        "logo": null
+      }
+    },
+    "org.apache.kafka.connect.file.FileStreamSinkConnector": {
+      "title": "File Stream Sink",
+      "logo": "/assets/connectors/apache-kafka.png",
+      "owner": {
+        "name": "Apache"
+      }
+    },
+    "org.apache.kafka.connect.file.FileStreamSourceConnector": {
+      "title": "File Stream Source",
+      "logo": "/assets/connectors/apache-kafka.png",
+      "owner": {
+        "name": "Apache"
+      }
+    },
+    "com.github.jcustenborder.kafka.connect.spooldir.SpoolDirCsvSourceConnector": {
+      "name": "SpoolDirCsvSourceConnector",
+      "title": "CSV Source Connector",
+      "logo": "/assets/connectors/apache-kafka.png",
+      "description": "The SpoolDirCsvSourceConnector will monitor the directory specified in input.path for files \nand read them as a CSV converting each of the records to the strongly typed equivalent specified in key.schema and value.schema.",
+      "owner": {
+        "username": "jcustenborder",
+        "type": null,
+        "name": "Jeremy Custenborder",
+        "url": null,
+        "logo": null
+      }
+    },
+    "com.github.jcustenborder.kafka.connect.spooldir.SpoolDirJsonSourceConnector": {
+      "name": "SpoolDirJsonSourceConnector",
+      "title": "JSON Source Connector",
+      "logo": "/assets/connectors/apache-kafka.png",
+      "description": "This connector is used to stream <https://en.wikipedia.org/wiki/JSON_Streaming> JSON files from a directory while converting the data based on the schema supplied in the configuration.",
+      "owner": {
+        "username": "jcustenborder",
+        "type": null,
+        "name": "Jeremy Custenborder",
+        "url": null,
+        "logo": null
+      }
+    },
+    "com.github.jcustenborder.kafka.connect.spooldir.SpoolDirLineDelimitedSourceConnector": {
+      "title": "Line Delimited Source",
+      "description": "A Kafka Connect connector reading delimited files from the file system.",
+      "logo": "/assets/connectors/apache-kafka.png",
+      "owner": {
+        "username": "jcustenborder",
+        "type": null,
+        "name": "Jeremy Custenborder",
+        "url": null,
+        "logo": null
+      }
+    },
+    "com.github.jcustenborder.kafka.connect.spooldir.SpoolDirSchemaLessJsonSourceConnector": {
+      "title": "Schemaless JSON Source",
+      "description": "A Kafka Connect connector reading delimited files from the file system.",
+      "logo": "/assets/connectors/apache-kafka.png",
+      "owner": {
+        "username": "jcustenborder",
+        "type": null,
+        "name": "Jeremy Custenborder",
+        "url": null,
+        "logo": null
+      }
+    },
+    "com.github.jcustenborder.kafka.connect.spooldir.elf.SpoolDirELFSourceConnector": {
+      "title": "Extended Log File Format Source",
+      "description": "A Kafka Connect connector reading delimited files from the file system.",
+      "logo": "/assets/connectors/apache-kafka.png",
+      "owner": {
+        "username": "jcustenborder",
+        "type": null,
+        "name": "Jeremy Custenborder",
+        "url": null,
+        "logo": null
+      }
+    }
+  }
+}
