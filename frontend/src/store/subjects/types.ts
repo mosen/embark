@@ -1,23 +1,28 @@
-import {JSONAPIDocument} from "@/jsonapi";
 
-
-export interface SubjectAttr {
+export interface Subject {
     name: string;
-
 }
 
-export type SubjectResponseDto = JSONAPIDocument<SubjectAttr>;
-
-export type SubjectsResponseDto = JSONAPIDocument<{ name: string }>;
-
-export interface SchemaAttr {
+export interface Schema {
     schema: string;
 }
 
-export interface SchemaDetailAttr extends SchemaAttr {
+export interface SchemaDetail extends Schema {
     subject: string;
     version: number;
     id: number;
 }
 
-export type SchemaDetailResponseDto = JSONAPIDocument<SchemaDetailAttr>;
+export enum CompatibilityLevel {
+    BACKWARD = "BACKWARD",
+    BACKWARD_TRANSITIVE = "BACKWARD_TRANSITIVE",
+    FORWARD = "FORWARD",
+    FORWARD_TRANSITIVE = "FORWARD_TRANSITIVE",
+    FULL = "FULL",
+    FULL_TRANSITIVE = "FULL_TRANSITIVE",
+    NONE = "NONE",
+}
+
+export interface GlobalConfiguration {
+    compatibilityLevel: CompatibilityLevel;
+}

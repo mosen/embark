@@ -2,11 +2,11 @@ import {Module} from "vuex";
 import {RootState} from "@/store";
 import * as actions from "./actions";
 import * as mutations from "./mutations";
-import {SchemaDetailResponseDto, SubjectsResponseDto} from "./types";
+import {SchemaDetail, Subject} from "./types";
 
 export interface SubjectsState {
-    latestSchema?: SchemaDetailResponseDto;
-    data?: SubjectsResponseDto;
+    latestSchema?: SchemaDetail;
+    data?: Subject[];
     loading: boolean;
     hasError: boolean;
     errorMessage?: string;

@@ -1,4 +1,4 @@
-export interface VersionResponseDto {
+export interface VersionResponse {
     version: string;
     commit: string;
     kafka_cluster_id: string;

@@ -90,6 +90,6 @@ export interface KSQLServerInfo {
     ksqlServiceId: string;
 }
 
-export interface KSQLServerInfoDto {
+export interface KSQLServerInfoResponse {
     KsqlServerInfo: KSQLServerInfo;
 }

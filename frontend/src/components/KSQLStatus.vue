@@ -12,8 +12,8 @@
             <v-list v-else class="transparent">
                 <v-list-item>
                     <v-list-item-content>
-                        <v-list-item-title>Version</v-list-item-title>
-                        <v-list-item-subtitle>{{ version }}</v-list-item-subtitle>
+                        <v-list-item-title>{{ version }}</v-list-item-title>
+                        <v-list-item-subtitle>Version</v-list-item-subtitle>
                     </v-list-item-content>
                 </v-list-item>
             </v-list>
@@ -43,7 +43,7 @@ export default class KSQLStatus extends Vue {
     }
 
     public created() {
-        this.$store.dispatch('ksqlInfo');
+        this.$store.dispatch('fetchKsqlInfo');
     }
 }
 </script>

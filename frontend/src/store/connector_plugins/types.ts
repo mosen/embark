@@ -1,16 +1,8 @@
-import {JSONAPIDocument} from "@/jsonapi";
 
-
-// export interface ConnectorPluginAttr {
-//     name: string;
-// }
-
-export interface ConnectorPluginAttr {
+export interface ConnectorPlugin {
     class: string;
-    type: string;
-    version: string;
+    type: "source" | "sink";
+    version: string | null;
 }
 
-export type ConnectorPluginResponseDto = JSONAPIDocument<ConnectorPluginAttr>;
-
-export type ConnectorPluginsResponseDto = JSONAPIDocument<ConnectorPluginAttr>;
+export type ConnectorPluginsResponse = ConnectorPlugin[];

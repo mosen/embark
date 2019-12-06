@@ -2,10 +2,10 @@ import {Module} from "vuex";
 import {RootState} from "@/store";
 import * as actions from "./actions";
 import * as mutations from "./mutations";
-import {ConnectorPluginsResponseDto} from "./types";
+import {ConnectorPluginsResponse} from "./types";
 
 export interface ConnectorPluginsState {
-    data?: ConnectorPluginsResponseDto;
+    data?: ConnectorPluginsResponse;
     loading: boolean;
     hasError: boolean;
     errorMessage?: string;

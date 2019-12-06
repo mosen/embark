@@ -12,18 +12,33 @@ some boundaries. Developers had also requested a web UI to keep an eye on their 
 
 ## Architecture ##
 
-Embark consists of a family of REST Proxy services (known in micronaut as a "Federation"), 
-that talk [JSON-API](https://jsonapi.org/), and that are built with the [micronaut framework](https://micronaut.io/):
+Embark consists of a family of services (known in micronaut as a "Federation"), 
+that either proxy or act as an interface to API's 
+and that are built with the [micronaut framework](https://micronaut.io/):
 
 - **admin**, which handles AdminClient API functionality.
-- **connect**, which proxies requests to Kafka Connect.
-- **schemaregistry**, which proxies requests to Schema Registry.
-- **ksql**, which proxies requests to KSQL server.
+- **connect**, which will act as middleware for the Connect REST API to
+  enforce RBAC and namespacing.
+- **schemaregistry**, which will act as middleware for the Schema Registry
+  API to enforce RBAC and namespacing.
+- **ksql**, which will act as middleware for the KSQL server.
 
 It also comes with a [frontend](frontend), built with Vue.js.
 
-The reason that we proxy some services is to overlay more authorisation features, but their functionality does not change
-in terms of which REST endpoints are available.
+The reason we proxy some of the services is:
+
+1. We need to apply an authorization model on top of what currently exists.
+2. *MOST* confluent REST API's do not support CORS headers.
+
+*SOME* services support CORS using the following properties:
+
+    access.control.allow.origin=<embark url>
+    # or really insecure:
+    access.control.allow.origin=*
+    
+    access.control.allow.methods=GET,OPTIONS,HEAD,POST,PUT,DELETE # Defaults to GET,POST,HEAD
+
+I got this to work for Schema Registry only, and it is documented for Connect.
 
 ## Features ##
 
@@ -48,6 +63,8 @@ Kubernetes or OpenShift.
 
 ## Configuration ##
 
+The authoritative source is the example application config file [application.example.yml](application.example.yml).
+
 - The admin service uses [micronaut-kafka](https://micronaut-projects.github.io/micronaut-kafka/latest/guide/), so
   the configuration is the same. You can specify the bootstrap configuration like so:   
 
@@ -65,7 +82,7 @@ This will make it easier to adopt micronaut packages in the future which cover c
 - **(TODO)** Each service should have an application.example.yml file containing all possible configuration options that
     are not micronaut options. 
 
-## Security Model ##
+## Security Model - Proposed Design ##
 
 ### Kafka Connect ###
 

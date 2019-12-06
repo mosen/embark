@@ -95,3 +95,10 @@ If you still have issues with kerberos, supply the JAAS debugging flag as:
 ### See Also ###
 
 - A great walkthrough of SASL ACLs https://github.com/shafiquejamal/kafka-zookeeper-kerberos/blob/master/README-Kafka-brokers-SASL-only.md
+
+
+### Creating Service Accounts in PowerShell ###
+
+    New-ADUser -SamAccountName "kafka_connect" -GivenName "Kafka" -Surname "Connect" -DisplayName"Kafka Connect Service Account" -Path 'CN=Users,DC=contoso,DC=private'
+    # SetSPN -S kafka_connect KRB_USR_CONNECT
+    ktpass -princ kafka_connect@contoso.local -mapUser CONTOSO\kafka_connect -crypto RC4-HMAC-NT -ptype KRB5_NT_PRINCIPAL -pass P@ssw0rd -out C:\Users\Administrator\Documents\kafka_connect.ktab

@@ -1,7 +1,9 @@
 import {AxiosResponse} from "axios";
 import {Mutation} from "vuex";
 import {RootState} from "@/store/index";
-import {ClusterNode, ClusterNodesResponseDto, VersionResponseDto} from "@/store/types";
+import {ClusterNode, ClusterNodesResponseDto, VersionResponse} from "@/store/types";
+import {CompatibilityLevel} from "@/store/subjects/types";
+import {KSQLServerInfoResponse} from "@/store/ksql/types";
 
 // Standard type definition for an exception handling mutation which sets an error on the state tree.
 export type ErrorMutation<S> = (state: S, payload: Error) => any;
@@ -22,7 +24,7 @@ export const connectInfoRequested: Mutation<RootState> = (state): void => {
     state.connect.loading = true;
 };
 
-export const connectInfoReplace: Mutation<RootState> = (state, payload: VersionResponseDto): void => {
+export const connectInfoReplace: Mutation<RootState> = (state, payload: VersionResponse): void => {
     state.connect.loading = false;
     state.connect.version = payload.version;
     state.connect.commit = payload.commit;
@@ -40,9 +42,9 @@ export const registryInfoRequested: Mutation<RootState> = (state): void => {
     state.registry.loading = true;
 };
 
-export const registryInfoReplace: Mutation<RootState> = (state, payload: VersionResponseDto): void => {
+export const registryInfoReplace: Mutation<RootState> = (state, payload: CompatibilityLevel): void => {
     state.registry.loading = false;
-    state.registry.url = payload.registryUrl;
+    state.registry.compatibility = payload;
 };
 
 export const registryInfoError: Mutation<RootState> = (state, err): void => {
@@ -62,5 +64,21 @@ export const clusterInfoReplace: Mutation<RootState> = (state, payload: ClusterN
 
 export const clusterInfoError: Mutation<RootState> = (state, err): void => {
     state.cluster.error = true;
+    console.log(err);
+};
+
+
+export const ksqlInfoRequested: Mutation<RootState> = (state): void => {
+    state.ksql.loading = true;
+};
+
+export const ksqlInfoReplace: Mutation<RootState> = (state, payload: KSQLServerInfoResponse): void => {
+    state.ksql.loading = false;
+    state.ksql.info = payload;
+};
+
+export const ksqlInfoError: Mutation<RootState> = (state, err): void => {
+    state.ksql.loading = false;
+    state.ksql.error = true;
     console.log(err);
 };

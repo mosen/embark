@@ -1,7 +1,7 @@
 import {Mutation} from "vuex";
 import {ErrorMutation, SuccessMutation} from "@/store/mutations";
 import {ConnectorPluginsState} from "@/store/connector_plugins/index";
-import {ConnectorPluginsResponseDto} from "./types";
+import {ConnectorPluginsResponse} from "@/store/connector_plugins/types";
 
 
 export const connectorPluginsRequested: Mutation<ConnectorPluginsState> = (state): void => {
@@ -16,7 +16,7 @@ export const connectorPluginsError: ErrorMutation<ConnectorPluginsState> = (stat
     state.errorMessage = payload.message;
 };
 
-export const connectorPluginsReplace: SuccessMutation<ConnectorPluginsState, ConnectorPluginsResponseDto> = (state, payload): void => {
+export const connectorPluginsReplace: SuccessMutation<ConnectorPluginsState, ConnectorPluginsResponse> = (state, payload): void => {
     state.data = payload.data;
     state.loading = false;
     state.hasError = false;

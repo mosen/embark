@@ -8,9 +8,11 @@ import {ConnectorsModule} from "@/store/connectors";
 import {ConnectorPluginsModule} from "@/store/connector_plugins";
 import {SubjectsModule} from "@/store/subjects";
 import {KSQLModule} from "@/store/ksql";
+import {CompatibilityLevel} from "@/store/subjects/types";
 
 import * as actions from "./actions";
 import * as mutations from "./mutations";
+import {KSQLServerInfoResponse} from "@/store/ksql/types";
 
 Vue.use(Vuex);
 
@@ -45,8 +47,7 @@ export interface RootState {
     registry: {
         loading: boolean;
         error: boolean;
-
-        url: string;
+        compatibility: CompatibilityLevel | null;
     };
 
     cluster: {
@@ -56,6 +57,13 @@ export interface RootState {
         nodes: string[];
         clusterId: string;
     };
+
+    ksql: {
+        loading: boolean;
+        error: boolean;
+
+        info: KSQLServerInfoResponse | null;
+    }
 }
 
 export default new Vuex.Store<RootState>({
@@ -71,9 +79,9 @@ export default new Vuex.Store<RootState>({
     state: {
         endpoints: {
             adminApi: process.env.VUE_APP_KAFKA_ADMIN_API,
-            connectApi: process.env.VUE_APP_KAFKA_CONNECT_API,
-            schemaRegistryApi: process.env.VUE_APP_KAFKA_SCHEMA_REGISTRY_API,
-            ksqlApi: process.env.VUE_APP_KAFKA_KSQL_API,
+            connectApi: process.env.VUE_APP_KAFKA_CONNECT,
+            schemaRegistryApi: process.env.VUE_APP_SCHEMA_REGISTRY,
+            ksqlApi: process.env.VUE_APP_KSQL,
         },
 
         loading: false,
@@ -98,7 +106,7 @@ export default new Vuex.Store<RootState>({
             loading: false,
             error: false,
 
-            url: "",
+            compatibility: null,
         },
 
         cluster: {
@@ -106,6 +114,13 @@ export default new Vuex.Store<RootState>({
             error: false,
 
             nodes: [],
+        },
+
+        ksql: {
+            loading: false,
+            error: false,
+
+            info: null,
         }
     },
     mutations,
