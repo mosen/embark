@@ -51,7 +51,7 @@
 
 <script lang="ts">
 import {Component, Prop, Vue} from 'vue-property-decorator';
-import {TopicConfigurationResponseDto, TopicDescriptionResponseDto, TopicPartition} from '@/store/topics/types';
+import {TopicDescription, TopicPartition} from '@/store/topics/types';
 import Partitions from "@/components/Partitions.vue";
 import Configurations from "@/components/Configurations.vue";
 import Permissions from '@/components/Permissions.vue';
@@ -89,7 +89,7 @@ export default class Topic extends Vue {
         }
     }
 
-    public get topic(): TopicDescriptionResponseDto {
+    public get topic(): TopicDescription | null {
         return this.$store.state.topics.current;
     }
 

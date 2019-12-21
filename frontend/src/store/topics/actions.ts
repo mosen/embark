@@ -39,7 +39,7 @@ export const topicConfiguration: Action<TopicsState, RootState> = async ({state,
     }
 };
 
-export const createTopic: Action<TopicsState, RootState> = async ({state, commit, rootState}, topicData: NewTopic) => {
+export const createTopic: Action<TopicsState, RootState> = async ({state, commit, dispatch, rootState}, topicData: NewTopic) => {
     commit('topicCreateRequest', topicData);
     try {
         const response = await Axios.post<TopicDescription>(
@@ -47,8 +47,16 @@ export const createTopic: Action<TopicsState, RootState> = async ({state, commit
         commit('topicCreated', response.data);
         commit('setSnackbarVisible', true);
         commit('setSnackbarText', `Created topic`);
+
+        await dispatch('topics', {});
+
+        return response;
     } catch (e) {
         commit('topicCreateError', e);
+        commit('setSnackbarVisible', true);
+        commit('setSnackbarText', `Failed to create topic, reason: ${e.message}`);
+
+        throw e;
     }
 };
 
@@ -56,13 +64,17 @@ export const confirmDeleteTopic: Action<TopicsState, RootState> = async ({ state
     commit('confirmDeleteTopic', name);
 };
 
-export const deleteTopic: Action<TopicsState, RootState> = async ({state, commit, rootState}, name: string) => {
+export const deleteTopic: Action<TopicsState, RootState> = async ({state, commit, dispatch, rootState}, name: string) => {
     commit('topicDeleteRequest', { name });
     try {
         const response = await Axios.delete<void>(`${rootState.endpoints.adminApi}/v1/topics/${name}`);
         commit('topicDeleted', { name });
         commit('setSnackbarVisible', true);
         commit('setSnackbarText', `Removed topic "${name}"`);
+
+        await dispatch('topics', {});
+
+        return response;
     } catch (e) {
         commit('topicDeleteError', e);
     }

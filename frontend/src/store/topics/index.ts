@@ -13,7 +13,7 @@ import {ConfigEntry} from "@/store/types";
 export interface TopicsState {
     current?: TopicDescription;
     configuration?: ConfigEntry[];
-    data?: TopicListing[];
+    data: TopicListing[] | null;
     loading: boolean;
     hasError: boolean;
     errorMessage?: string;
@@ -25,7 +25,7 @@ export const TopicsModule: Module<TopicsState, RootState> = {
     state: {
         current: undefined,
         configuration: [],
-        data: undefined,
+        data: null,
         loading: false,
         hasError: false,
         errorMessage: undefined,

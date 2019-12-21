@@ -28,6 +28,7 @@
                             v-model="partitions"
                             label="Partitions"
                             type="number"
+                            hint="For best performance, must be a multiple of consumers"
                     ></v-text-field>
 
                     <v-text-field
@@ -51,8 +52,7 @@
 <script lang="ts">
 import {Component, Vue} from 'vue-property-decorator';
 import {VuetifyRuleValidator} from 'vuetify/src/mixins/validatable/index';
-import {CreateTopic, CreateTopicRequestDto} from "@/store/topics/types";
-import {Resource, JSONAPIDocument} from "@/jsonapi";
+import {NewTopic} from "@/store/topics/types";
 
 @Component({
     components: {},
@@ -75,21 +75,18 @@ export default class NewTopicDialog extends Vue {
     }
 
     public save() {
-        console.log("Save topic");
-
-        const req: JSONAPIDocument<Resource<CreateTopic>> = {
-            data: {
-                type: 'topics',
-                attributes: {
-                    name: this.name,
-                    numPartitions: this.partitions,
-                    replicationFactor: this.replicas,
-                }
-            }
+        const req: NewTopic = {
+            name: this.name,
+            numPartitions: this.partitions,
+            replicationFactor: this.replicas,
         };
 
-        this.$store.dispatch('createTopic', req);
-        this.dialog = false;
+        try {
+            const result = this.$store.dispatch('createTopic', req);
+            this.dismiss();
+        } catch (e) {
+
+        }
     }
 }
 </script>

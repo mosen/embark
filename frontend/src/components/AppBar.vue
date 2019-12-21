@@ -4,7 +4,7 @@
         dark
         clipped-left
     >
-        <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+        <v-app-bar-nav-icon @click.stop="toggleNavHidden"></v-app-bar-nav-icon>
 
         <v-toolbar-title class="title">Embark</v-toolbar-title>
         <v-spacer></v-spacer>
@@ -25,7 +25,9 @@ import ProfileMenu from "@/components/ProfileMenu.vue";
     components: {ProfileMenu},
 })
 export default class AppBar extends Vue {
-    public drawer: boolean = true;
+    public toggleNavHidden() {
+        this.$store.commit("NAV_DRAWER_OPEN", !this.$store.state.drawer.open);
+    }
 }
 </script>
 

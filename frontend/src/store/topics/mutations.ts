@@ -84,6 +84,7 @@ export const topicDeleteRequest: Mutation<TopicsState> = (state, payload: { name
 };
 
 export const topicDeleteError: Mutation<TopicsState> = (state, payload: Error): void => {
+    state.loading = false;
     state.hasError = true;
     state.errorMessage = payload.message;
 };

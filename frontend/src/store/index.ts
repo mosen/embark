@@ -34,6 +34,10 @@ export interface RootState {
         text: string;
     };
 
+    drawer: {
+        open: boolean;
+    };
+
     connect: {
         loading: boolean;
         error: boolean;
@@ -90,6 +94,10 @@ export default new Vuex.Store<RootState>({
         snackbar: {
             open: false,
             text: ""
+        },
+
+        drawer: {
+            open: true,
         },
 
         connect: {

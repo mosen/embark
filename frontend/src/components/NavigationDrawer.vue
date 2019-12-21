@@ -1,6 +1,6 @@
 <template>
     <v-navigation-drawer
-        v-model="drawer"
+        v-model="open"
         app clipped light
     >
         <v-list flat>
@@ -110,13 +110,14 @@
 </template>
 
 <script lang="ts">
-import {Component, Vue} from 'vue-property-decorator';
+    import {Component, Prop, Vue} from 'vue-property-decorator';
 
 @Component({
     components: {},
 })
 export default class NavigationDrawer extends Vue {
-    public drawer: boolean = true;
+    @Prop()
+    open!: boolean;
 }
 </script>
 
