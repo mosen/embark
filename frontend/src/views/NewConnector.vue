@@ -1,41 +1,32 @@
 <template>
     <v-container>
-        <ConnectorPluginsGallery
-                :data="connectorPlugins"
-                :loading="loading"
-                :error="hasError" />
+        <v-row>
+            <v-col>
+                <h1>New Connector</h1>
+                <h3>{{ this.$route.params.classname }}</h3>
+            </v-col>
+        </v-row>
+        <ConnectorPluginDynamicForm />
     </v-container>
 </template>
 
 <script lang="ts">
 import {Component, Vue} from 'vue-property-decorator';
-import ConnectorPluginsGallery from "@/components/ConnectorPluginsGallery.vue";
+import ConnectorPluginDynamicForm from "@/components/connector-plugins/ConnectorPluginDynamicForm.vue";
 
 @Component({
-    components: {ConnectorPluginsGallery}
+    components: {ConnectorPluginDynamicForm}
 })
 export default class NewConnector extends Vue {
 
-    public search?: string = "";
-
-    public get connectorPlugins() {
-        return this.$store.state.connectorPlugins.data;
-    }
-
-    public get loading() {
-        return this.$store.state.connectorPlugins.loading;
-    }
-
-    public get hasError() {
-        return this.$store.state.connectorPlugins.hasError;
-    }
-
-    public get errorMessage() {
-        return this.$store.state.connectorPlugins.errorMessage;
-    }
-
     public created() {
-        this.$store.dispatch('connectorPlugins');
+        // Blank POST to get all possible configuration vars
+        this.$store.dispatch('validateConnectorPlugin', {
+            classname: this.$route.params.classname,
+            config: {
+                "connector.class": this.$route.params.classname,
+            },
+        });
     }
 }
 </script>

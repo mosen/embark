@@ -3,9 +3,10 @@
         <v-row>
             <v-col lg="3" v-for="(plugin, idx) in data" :key="plugin.id">
                 <ConnectorPluginCard
-                        v-if="connectors.plugins.hasOwnProperty(plugin.attributes.class)"
+                        v-if="connectors.plugins.hasOwnProperty(plugin.class)"
                         :data="plugin"
-                        :metadata="connectors.plugins[plugin.attributes.class]" />
+                        :metadata="connectors.plugins[plugin.class]"
+                />
             </v-col>
         </v-row>
     </div>
@@ -13,10 +14,9 @@
 
 <script lang="ts">
 import {Component, Prop, Vue} from "vue-property-decorator";
-import {ConnectorPluginAttr, ConnectorPluginsResponseDto} from "@/store/connector_plugins/types";
-import {Resource} from "@/jsonapi";
+import {ConnectorPlugin} from "@/store/connector_plugins/types";
 import connectors from "@/assets/connectors.json";
-import ConnectorPluginCard from "@/components/ConnectorPluginCard.vue";
+import ConnectorPluginCard from "./ConnectorPluginCard.vue";
 
 @Component({
     components: {ConnectorPluginCard}
@@ -24,7 +24,7 @@ import ConnectorPluginCard from "@/components/ConnectorPluginCard.vue";
 export default class ConnectorPluginsGallery extends Vue {
 
     @Prop()
-    private data!: Resource<ConnectorPluginAttr>[];
+    private data!: ConnectorPlugin[];
 
     @Prop(Boolean)
     private loading!: boolean;

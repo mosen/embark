@@ -9,7 +9,7 @@
                 </v-expand-transition>
             </v-flex>
         </v-layout>
-        <v-btn color="accent" to="/new/connector">New
+        <v-btn color="accent" to="/new/connector/browse">New
             <v-icon>mdi-plus</v-icon>
         </v-btn>
         <v-layout wrap>

@@ -30,6 +30,8 @@ The reason we proxy some of the services is:
 1. We need to apply an authorization model on top of what currently exists.
 2. *MOST* confluent REST API's do not support CORS headers.
 
+### CORS Concerns and Development ###
+
 *SOME* services support CORS using the following properties:
 
     access.control.allow.origin=<embark url>
@@ -39,6 +41,14 @@ The reason we proxy some of the services is:
     access.control.allow.methods=GET,OPTIONS,HEAD,POST,PUT,DELETE # Defaults to GET,POST,HEAD
 
 I got this to work for Schema Registry only, and it is documented for Connect.
+
+The Kafka Connect change was [KAFKA-3424](https://github.com/apache/kafka/commit/eb823281a52f3b27c3a889e7412bc07b3024e688)
+but the option seems to be useless.
+
+*UPDATE*: The following works for Connect, but does not add the CORS headers until the client supplies an Origin header?
+
+    access.control.allow.origin="*"
+    rest.port=8083
 
 ## Features ##
 
@@ -84,21 +94,43 @@ This will make it easier to adopt micronaut packages in the future which cover c
 
 ## Security Model - Proposed Design ##
 
+### Why not use the REST Proxy? ###
+
+The REST Proxy supports authentication to the Kafka Cluster, but itself does not support any authentication unless
+you use the Commercial [REST Proxy Security Plugin](). The Security plugin only supports SSL Client or Basic Auth
+schemes, of which neither are used in this application.
+
+It is against the design of this project because:
+
+- This project should work with Apache Kafka (OSS), and
+- This project should not introduce any cost barriers.
+
 ### Kafka Connect ###
 
-The proxy service will maintain a mapping of Embark service principal to connector name.
-Whenever a connector is created via the REST API, it will be associated with the current user.
-This will be used to provide a filtered view of connectors.
 
 ### KSQL ###
 
-In order to apply controls to KSQL it is necessary to parse the identifiers from the statements being executed.
+KSQL Server can natively connect to a secured Kafka Cluster _as a single security principal_
 
-If the current user is not allowed to SELECT (read) from a topic, the statement request will be rejected.
+To natively support a multi-user scenario, it seems you would require 
+a KSQL server for each application to hold one credential for each
+responsible party.
+
+In order for us to avoid noisy neighbours, we need to simulate access to topics when KSQL is
+POSTed to the KSQL server instance. This means:
+
+- Analyzing the query for identifiers that could have ACLs applied.
+- Making a relationship between the logged-in user and a security principal in Kafka.
+- Retrieving and comparing ACLs against the associated principal for identifiers that are
+  part of the query.
+
+The current way forward is to try to inject a middleware between the KSQL Server
+and the client to make authorization decisions, based upon a bearer token.
 
 ### Schema Registry ###
 
-
+The Schema Registry has the best model of multi-user support via the commercially licensed
+Schema Registry Security Plugin.
 
 ## Developer Stuff ##
 

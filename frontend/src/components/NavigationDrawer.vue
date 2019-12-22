@@ -116,8 +116,15 @@
     components: {},
 })
 export default class NavigationDrawer extends Vue {
-    @Prop()
-    open!: boolean;
+
+    public get open(): boolean {
+        return this.$store.state.drawer.open;
+    }
+
+    public set open(value: boolean) {
+        this.$store.commit("NAV_DRAWER_OPEN", value);
+    }
+
 }
 </script>
 

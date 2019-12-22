@@ -19,7 +19,7 @@
 <script lang="ts">
 import {Component, Prop, Vue} from 'vue-property-decorator';
 import {TableHeader} from 'vuetify/src/components/VDataTable/mixins/header';
-import {Resource} from "@/jsonapi";
+import {Connector} from "@/store/connectors/types";
 
 interface TableRow {
     name: string;
@@ -29,7 +29,7 @@ interface TableRow {
 export default class ConnectorsDataTable extends Vue {
 
     @Prop()
-    public readonly data?: Resource<{ name: string }>[];
+    public readonly data?: Connector[];
 
     @Prop()
     public search: string = "";
@@ -51,7 +51,7 @@ export default class ConnectorsDataTable extends Vue {
     public get items(): TableRow[] {
         if (this.data) {
             return this.data.map((attrs) => {
-                return { "name": attrs.attributes.name };
+                return { "name": attrs.name };
             });
         } else {
             return [];

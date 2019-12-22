@@ -50,10 +50,16 @@ export default new Router({
                 import(/* webpackChunkName: "connector" */ './views/Connector.vue'),
         },
         {
-            path: '/new/connector',
+            path: '/new/connector/browse',
+            name: 'new-connector-gallery',
+            component: (): Promise<typeof import('*.vue')> =>
+                import(/* webpackChunkName: "new-connector-gallery" */ './views/NewConnectorGallery.vue'),
+        },
+        {
+            path: '/new/connector/class/:classname',
             name: 'new-connector',
             component: (): Promise<typeof import('*.vue')> =>
-                import(/* webpackChunkName: "connector" */ './views/NewConnector.vue'),
+                import(/* webpackChunkName: "new-connector" */ './views/NewConnector.vue'),
         },
         {
             path: '/connector-plugins',

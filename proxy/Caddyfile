@@ -1,0 +1,8 @@
+# Proxy Kafka Connect
+localhost:9083 {
+	proxy / localhost:8083 {
+		header_upstream Location 9083 8083
+		header_downstream Access-Control-Allow-Origin *
+	}
+}
+

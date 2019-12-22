@@ -62,7 +62,7 @@ export interface RootState {
         clusterId: string;
     };
 
-    ksql: {
+    ksqlInfo: {
         loading: boolean;
         error: boolean;
 
@@ -124,7 +124,7 @@ export default new Vuex.Store<RootState>({
             nodes: [],
         },
 
-        ksql: {
+        ksqlInfo: {
             loading: false,
             error: false,
 

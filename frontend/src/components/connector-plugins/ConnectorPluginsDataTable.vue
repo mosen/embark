@@ -8,8 +8,7 @@
         :loading="loading"
     >
         <template v-slot:item.type="{ item }">
-            <v-icon v-if="item.type === 'source'" title="source">mdi-upload</v-icon>
-            <v-icon v-if="item.type === 'sink'" title="sink">mdi-briefcase-download</v-icon>
+            {{ item.type }}
         </template>
 
     </v-data-table>
@@ -18,7 +17,6 @@
 <script lang="ts">
 import {Component, Prop, Vue} from 'vue-property-decorator';
 import {TableHeader} from 'vuetify/src/components/VDataTable/mixins/header';
-import ConnectorPlugins from "@/views/ConnectorPlugins.vue";
 import {ConnectorPlugin} from "@/store/connector_plugins/types";
 
 interface TableRow {
@@ -31,7 +29,7 @@ interface TableRow {
 export default class ConnectorPluginsDataTable extends Vue {
 
     @Prop()
-    public readonly data?: ConnectorPlugins;
+    public readonly data?: ConnectorPlugin[];
 
     @Prop()
     public search: string = "";
@@ -59,7 +57,7 @@ export default class ConnectorPluginsDataTable extends Vue {
             return this.data.map((plugin: ConnectorPlugin) => {
                 return {
                     "type": plugin.type,
-                    "version": plugin.version,
+                    "version": plugin.version || "",
                     "class": plugin.class,
                 };
             });

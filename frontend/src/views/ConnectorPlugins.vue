@@ -1,16 +1,16 @@
 <template>
     <v-container>
-        <v-layout>
-            <v-flex xs12>
+        <v-row>
+            <v-col xs12>
                 <v-expand-transition>
                     <v-alert v-if="hasError" type="error" colored-border border="left">
                         {{ errorMessage }}
                     </v-alert>
                 </v-expand-transition>
-            </v-flex>
-        </v-layout>
-        <v-layout wrap>
-            <v-flex xs12 class="mb-5">
+            </v-col>
+        </v-row>
+        <v-row>
+            <v-col xs12 class="mb-5">
                 <v-text-field
                         v-model="search"
                         prepend-inner-icon="mdi-magnify"
@@ -19,21 +19,26 @@
                         single-line
                         hide-details
                 ></v-text-field>
-            </v-flex>
-            <v-flex xs12>
+            </v-col>
+            <v-col xs12>
                 <ConnectorPluginsDataTable
                         :data="connectorPlugins"
                         :search="search"
                         :loading="loading"
                 ></ConnectorPluginsDataTable>
-            </v-flex>
-        </v-layout>
+            </v-col>
+        </v-row>
+        <v-row>
+            <v-col>
+                <p>Don't see the connector you want?</p>
+            </v-col>
+        </v-row>
     </v-container>
 </template>
 
 <script lang="ts">
 import {Component, Vue} from 'vue-property-decorator';
-import ConnectorPluginsDataTable from "@/components/ConnectorPluginsDataTable.vue";
+import ConnectorPluginsDataTable from "@/components/connector-plugins/ConnectorPluginsDataTable.vue";
 
 @Component({
     components: {ConnectorPluginsDataTable}

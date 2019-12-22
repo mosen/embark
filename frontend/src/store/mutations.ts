@@ -11,6 +11,9 @@ export type ErrorMutation<S> = (state: S, payload: Error) => any;
 // Standard Axios Success Response mutation
 export type SuccessMutation<S, AR> = (state: S, payload: AxiosResponse<AR>) => any;
 
+export const NAV_DRAWER_OPEN: Mutation<RootState> = (state, payload: boolean) => {
+    state.drawer.open = payload;
+};
 
 export const setSnackbarVisible = (state, visible: boolean = true): void => {
     state.snackbar.open = visible;
@@ -69,16 +72,15 @@ export const clusterInfoError: Mutation<RootState> = (state, err): void => {
 
 
 export const ksqlInfoRequested: Mutation<RootState> = (state): void => {
-    state.ksql.loading = true;
+    state.ksqlInfo.loading = true;
 };
 
 export const ksqlInfoReplace: Mutation<RootState> = (state, payload: KSQLServerInfoResponse): void => {
-    state.ksql.loading = false;
-    state.ksql.info = payload;
+    state.ksqlInfo.loading = false;
+    state.ksqlInfo.info = payload;
 };
 
 export const ksqlInfoError: Mutation<RootState> = (state, err): void => {
-    state.ksql.loading = false;
-    state.ksql.error = true;
-    console.log(err);
+    state.ksqlInfo.loading = false;
+    state.ksqlInfo.error = true;
 };

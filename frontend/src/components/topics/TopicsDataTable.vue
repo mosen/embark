@@ -73,7 +73,7 @@ export default class TopicsDataTable extends Vue {
     public options: Partial<DataTableOptions> = {};
 
     public get serverItemsLength(): number {
-        return this.$store.state.topics.data.total;
+        return this.$store.state.topics.data ? this.$store.state.topics.data.total : 0;
     }
 
     public headers: TableHeader[] = [
