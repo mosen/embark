@@ -3,6 +3,7 @@
         <v-col>
             <v-text-field
                     v-if="type === 'CLASS'"
+                    :v-model="model"
                     :name="name"
                     :label="display_name"
                     :hint="documentation"
@@ -10,6 +11,7 @@
             />
             <v-text-field
                     v-if="type === 'STRING'"
+                    :v-model="model"
                     :name="name"
                     :label="display_name"
                     :hint="documentation"
@@ -17,6 +19,7 @@
             />
             <v-text-field
                     v-if="type === 'LONG' || type === 'INT'"
+                    :v-model="model"
                     :name="name"
                     :label="display_name"
                     type="number"
@@ -50,6 +53,20 @@
     @Component({})
     export default class ConfigField extends Vue {
 
+        private _model: any = null;
+
+        public get model(): any {
+            if (this._model === null) {
+                return this.default_value;
+            } else {
+                return this._model;
+            }
+        }
+
+        public set model(value: any) {
+            this._model = value;
+        }
+
         @Prop()
         private readonly name!: string;
 
@@ -77,7 +94,7 @@
         @Prop()
         private readonly group!: string;
 
-        @Prop()
+        @Prop({ default: 0 })
         private readonly order!: number;
 
         @Prop()

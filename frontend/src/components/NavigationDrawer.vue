@@ -105,6 +105,25 @@
                     <v-list-item-title>Subjects</v-list-item-title>
                 </v-list-item-content>
             </v-list-item>
+
+            <v-divider></v-divider>
+
+            <v-list-item>
+                <v-list-item-content>
+                    <v-list-item-title class="title">
+                        KSQL
+                    </v-list-item-title>
+                </v-list-item-content>
+            </v-list-item>
+
+            <v-list-item to="/ksql">
+                <v-list-item-action>
+                    <v-icon>mdi-database</v-icon>
+                </v-list-item-action>
+                <v-list-item-content>
+                    <v-list-item-title>KSQL Editor</v-list-item-title>
+                </v-list-item-content>
+            </v-list-item>
         </v-list>
     </v-navigation-drawer>
 </template>

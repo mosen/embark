@@ -1,4 +1,4 @@
-import {KSQLServerInfoDto, KSQLStatementResult} from "@/store/ksql/types";
+import {KSQLServerInfo, KSQLStatementResult} from "@/store/ksql/types";
 import {Module} from "vuex";
 import {RootState} from "@/store";
 
@@ -12,8 +12,9 @@ export interface KSQLState {
     info: {
         loading: boolean;
         error: boolean;
-        data: KSQLServerInfoDto;
+        data: KSQLServerInfo | null;
     };
+    query: string;
     terminal: {
         lines: string[];
     };
@@ -26,9 +27,11 @@ export const KSQLModule: Module<KSQLState, RootState> = {
         terminal: {
             lines: []
         },
+        query: "",
         info: {
             loading: false,
             error: false,
+            data: null,
         }
     },
     actions,

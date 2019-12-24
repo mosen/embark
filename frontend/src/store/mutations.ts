@@ -69,18 +69,3 @@ export const clusterInfoError: Mutation<RootState> = (state, err): void => {
     state.cluster.error = true;
     console.log(err);
 };
-
-
-export const ksqlInfoRequested: Mutation<RootState> = (state): void => {
-    state.ksqlInfo.loading = true;
-};
-
-export const ksqlInfoReplace: Mutation<RootState> = (state, payload: KSQLServerInfoResponse): void => {
-    state.ksqlInfo.loading = false;
-    state.ksqlInfo.info = payload;
-};
-
-export const ksqlInfoError: Mutation<RootState> = (state, err): void => {
-    state.ksqlInfo.loading = false;
-    state.ksqlInfo.error = true;
-};

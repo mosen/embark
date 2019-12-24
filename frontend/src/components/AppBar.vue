@@ -9,10 +9,6 @@
         <v-toolbar-title class="title">Embark</v-toolbar-title>
         <v-spacer></v-spacer>
 
-        <v-btn icon tile title="KSQL Terminal" to="/ksql">
-            <v-icon>mdi-powershell</v-icon>
-        </v-btn>
-
         <ProfileMenu firstName="joe" sn="bloggs"></ProfileMenu>
     </v-app-bar>
 </template>

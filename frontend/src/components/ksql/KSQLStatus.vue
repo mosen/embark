@@ -12,8 +12,20 @@
             <v-list v-else class="transparent">
                 <v-list-item>
                     <v-list-item-content>
-                        <v-list-item-title>{{ version }}</v-list-item-title>
-                        <v-list-item-subtitle>Version</v-list-item-subtitle>
+                        <v-list-item-title>Version</v-list-item-title>
+                        <v-list-item-subtitle>{{ version }}</v-list-item-subtitle>
+                    </v-list-item-content>
+                </v-list-item>
+                <v-list-item>
+                    <v-list-item-content>
+                        <v-list-item-title>Cluster ID</v-list-item-title>
+                        <v-list-item-subtitle>{{ clusterId }}</v-list-item-subtitle>
+                    </v-list-item-content>
+                </v-list-item>
+                <v-list-item>
+                    <v-list-item-content>
+                        <v-list-item-title>Service ID</v-list-item-title>
+                        <v-list-item-subtitle>{{ serviceId }}</v-list-item-subtitle>
                     </v-list-item-content>
                 </v-list-item>
             </v-list>
@@ -42,8 +54,16 @@ export default class KSQLStatus extends Vue {
         return this.$store.state.ksql.info.data.KsqlServerInfo.version;
     }
 
+    public get clusterId(): string {
+        return this.$store.state.ksql.info.data.KsqlServerInfo.kafkaClusterId;
+    }
+
+    public get serviceId(): string {
+        return this.$store.state.ksql.info.data.KsqlServerInfo.ksqlServiceId;
+    }
+
     public created() {
-        this.$store.dispatch('fetchKsqlInfo');
+        this.$store.dispatch('ksqlInfo');
     }
 }
 </script>

@@ -32,14 +32,14 @@ import {CompatibilityLevel} from "@/store/subjects/types";
 export default class RegistryStatus extends Vue {
 
     public get loading(): boolean {
-        return this.$store.state.connect.loading;
+        return this.$store.state.registry.loading;
     }
 
     public get url(): string {
         return this.$store.state.registry.url || "";
     }
 
-    public get compatibility(): CompatibilityLevel {
+    public get compatibility(): CompatibilityLevel | null {
         return this.$store.state.registry.compatibility.compatibilityLevel;
     }
 

@@ -25,7 +25,7 @@ import { Component, Vue } from 'vue-property-decorator';
 import ConnectStatus from '@/components/ConnectStatus.vue';
 import RegistryStatus from "@/components/RegistryStatus.vue";
 import BrokerStatus from "@/components/BrokerStatus.vue";
-import KSQLStatus from "@/components/KSQLStatus.vue";
+import KSQLStatus from "@/components/ksql/KSQLStatus.vue";
 
 @Component({
     components: {
