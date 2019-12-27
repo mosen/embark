@@ -29,21 +29,22 @@
 
 <script lang="ts">
     import {Vue, Component} from "vue-property-decorator";
+
     import KSQLResultsPane from "@/components/ksql/KSQLResultsPane.vue";
     import KSQLQueryContent from "@/components/ksql/KSQLQueryContent.vue";
     import KSQLQueryToolbar from "@/components/ksql/KSQLQueryToolbar.vue";
 
-    import antlr4, {Token} from "antlr4";
-    import * as lexers from "@/ksql/src/ksql/SqlBaseLexer.js";
-    import * as parsers from "@/ksql/src/ksql/SqlBaseParser.js";
-    // import * as listeners from "@/ksql/src/ksql/SqlBaseListener.js";
-    import {ErrorListenerInterface} from "@/ksql/ErrorListener";
+    import {ANTLRErrorListener, ANTLRInputStream, CommonTokenStream, RecognitionException, Token, CharStreams} from 'antlr4ts';
+    import {SqlBaseLexer} from "@/ksql/SqlBaseLexer";
+    import {SqlBaseParser} from "@/ksql/SqlBaseParser";
+    // import {SqlBaseListener} from "@/ksql/SqlBaseListener";
+
     import {KSQLStatementResult} from "@/store/ksql/types";
 
     @Component({
         components: {KSQLQueryContent, KSQLResultsPane, KSQLQueryToolbar}
     })
-    export default class KSQLQueryEditor extends Vue implements ErrorListenerInterface {
+    export default class KSQLQueryEditor extends Vue implements ANTLRErrorListener<Token> {
 
         private validationErrors: any = [];
 
@@ -58,17 +59,13 @@
         public validate(query: string) {
             this.validationErrors = [];
 
-            const chars = new antlr4.InputStream(query);
-            const lexer = new lexers.SqlBaseLexer(chars);
-            const tokens = new antlr4.CommonTokenStream(lexer);
-            const parser = new parsers.SqlBaseParser(tokens);
+            const inputStream = new ANTLRInputStream(query);
+            const lexer = new SqlBaseLexer(inputStream);
+            const tokenStream = new CommonTokenStream(lexer);
+            const parser = new SqlBaseParser(tokenStream);
 
             parser.removeErrorListeners();
             parser.addErrorListener(this);
-
-            //
-            // lexer.removeErrorListeners();
-            // lexer.addErrorListener(errListener);
 
             const tree = parser.statement();
             console.log('tree follows');
@@ -88,7 +85,7 @@
             console.log('reportContextSensitivity');
         }
 
-        syntaxError(recognizer: any, offendingSymbol: Token, line: number, column: number, msg: string, e: Error): void {
+        syntaxError<T>(recognizer: any, offendingSymbol: T | undefined, line: number, column: number, msg: string, e: RecognitionException | undefined): void {
             this.validationErrors.unshift({ line, column, msg });
         }
 
