@@ -1,9 +1,7 @@
-import {AxiosResponse} from "axios";
 import {Mutation} from "vuex";
 
 import {
-    TopicConfigurationResponseDto, TopicDescription,
-    TopicDescriptionResponseDto,
+    TopicDescription,
     TopicListing,
 } from "@/store/topics/types";
 import {TopicsState} from "@/store/topics/index";

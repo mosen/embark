@@ -49,7 +49,7 @@
 import {Component, Prop, Vue, Watch} from 'vue-property-decorator';
 import {TableHeader} from 'vuetify/src/components/VDataTable/mixins/header';
 import {TopicListing} from "@/store/topics/types";
-import {DataTableOptions} from "@/vuetify";
+import {DataTableOptions} from "@/types/vuetify";
 import TopicsActionMenu from "./TopicsActionMenu.vue";
 import NewTopicDialog from "./NewTopicDialog.vue";
 

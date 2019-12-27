@@ -9,7 +9,7 @@
 
 <script lang="ts">
 import {Component, Prop, Vue} from 'vue-property-decorator';
-import {KafkaNode} from "@/store/topics/types";
+import {Node} from "@/store/topics/types";
 
 @Component({
     components: {},
@@ -20,13 +20,13 @@ export default class Partition extends Vue {
     private readonly id?: number;
 
     @Prop({ default: [] })
-    private readonly inSyncReplicas!: KafkaNode[];
+    private readonly inSyncReplicas!: Node[];
 
     @Prop({ default: [] })
-    private readonly replicas!: KafkaNode[];
+    private readonly replicas!: Node[];
 
     @Prop()
-    private readonly leader?: KafkaNode;
+    private readonly leader?: Node;
 
 }
 </script>

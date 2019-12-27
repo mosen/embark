@@ -18,9 +18,8 @@
 
 <script lang="ts">
 import {Component, Prop, Vue} from 'vue-property-decorator';
-import {ConsumerGroupAttr} from "@/store/consumer_groups/types";
+import {ConsumerGroup} from "@/store/consumer_groups/types";
 import {TableHeader} from 'vuetify/src/components/VDataTable/mixins/header';
-import {Resource} from "@/jsonapi";
 
 interface TableRow {
     groupId: string;
@@ -30,8 +29,8 @@ interface TableRow {
 @Component
 export default class ConsumerGroupsDataTable extends Vue {
 
-    @Prop()
-    public readonly data?: Resource<ConsumerGroupAttr>[];
+    @Prop({ default: [] })
+    private readonly data!: ConsumerGroup[];
 
     @Prop()
     public search: string = "";
@@ -52,8 +51,8 @@ export default class ConsumerGroupsDataTable extends Vue {
 
     public get items(): TableRow[] {
         if (this.data) {
-            return this.data.map((attrs) => {
-                return { "groupId": attrs.attributes.groupId, "isSimpleConsumerGroup": attrs.attributes.isSimpleConsumerGroup };
+            return this.data.map((cg) => {
+                return { "groupId": cg.groupId, "isSimpleConsumerGroup": cg.isSimpleConsumerGroup };
             });
         } else {
             return [];

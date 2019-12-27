@@ -1,9 +1,8 @@
 import {AxiosResponse} from "axios";
 import {Mutation} from "vuex";
 import {RootState} from "@/store/index";
-import {ClusterNode, ClusterNodesResponseDto, VersionResponse} from "@/store/types";
+import {ClusterNode, VersionResponse} from "@/store/types";
 import {CompatibilityLevel} from "@/store/subjects/types";
-import {KSQLServerInfoResponse} from "@/store/ksql/types";
 
 // Standard type definition for an exception handling mutation which sets an error on the state tree.
 export type ErrorMutation<S> = (state: S, payload: Error) => any;
@@ -15,11 +14,11 @@ export const NAV_DRAWER_OPEN: Mutation<RootState> = (state, payload: boolean) =>
     state.drawer.open = payload;
 };
 
-export const setSnackbarVisible = (state, visible: boolean = true): void => {
+export const setSnackbarVisible: Mutation<RootState> = (state, visible: boolean = true): void => {
     state.snackbar.open = visible;
 };
 
-export const setSnackbarText = (state, text: string): void => {
+export const setSnackbarText: Mutation<RootState> = (state, text: string): void => {
     state.snackbar.text = text;
 };
 

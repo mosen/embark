@@ -36,7 +36,7 @@
 
 <script lang="ts">
 import {Component, Vue} from 'vue-property-decorator';
-import ConnectorsDataTable from "@/components/ConnectorsDataTable.vue";
+import ConnectorsDataTable from "@/components/connectors/ConnectorsDataTable.vue";
 
 @Component({
     components: {ConnectorsDataTable}

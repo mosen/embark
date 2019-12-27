@@ -1,4 +1,4 @@
-import {Data, Resource} from "@/jsonapi";
+import {Data, Resource} from "./jsonapi";
 
 
 

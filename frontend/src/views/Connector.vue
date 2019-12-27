@@ -47,9 +47,9 @@
 
 <script lang="ts">
 import {Component, Prop, Vue} from 'vue-property-decorator';
-import Configurations from "@/components/Configurations.vue";
-import {ConnectorResponseDto, ConnectorStatusResponseDto} from '@/store/connectors/types';
-import ConnectorTasksDataTable from "@/components/ConnectorTasksDataTable.vue";
+import Configurations from "@/components/topics/Configurations.vue";
+import {ConnectorResponse, ConnectorStatusResponse} from '@/store/connectors/types';
+import ConnectorTasksDataTable from "@/components/connectors/ConnectorTasksDataTable.vue";
 
 @Component({
     components: {Configurations, ConnectorTasksDataTable}
@@ -58,11 +58,11 @@ export default class Connector extends Vue {
 
     public tabs: string = "connector-tabs-1";
 
-    public get connector(): ConnectorResponseDto {
+    public get connector(): ConnectorResponse {
         return this.$store.state.connectors.current;
     }
 
-    public get connectorStatus(): ConnectorStatusResponseDto {
+    public get connectorStatus(): ConnectorStatusResponse {
         return this.$store.state.connectors.currentStatus;
     }
 

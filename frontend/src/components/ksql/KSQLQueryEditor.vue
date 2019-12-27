@@ -5,7 +5,11 @@
                 <KSQLQueryContent
                         @validate="validate"
                         @execute="execute"
-                />
+                >
+                    <template v-slot:before-editor>
+                        <KSQLQueryToolbar @execute="execute" @check="validate" />
+                    </template>
+                </KSQLQueryContent>
             </v-col>
         </v-row>
         <v-row dense>
@@ -27,6 +31,7 @@
     import {Vue, Component} from "vue-property-decorator";
     import KSQLResultsPane from "@/components/ksql/KSQLResultsPane.vue";
     import KSQLQueryContent from "@/components/ksql/KSQLQueryContent.vue";
+    import KSQLQueryToolbar from "@/components/ksql/KSQLQueryToolbar.vue";
 
     import antlr4, {Token} from "antlr4";
     import * as lexers from "@/ksql/src/ksql/SqlBaseLexer.js";
@@ -36,7 +41,7 @@
     import {KSQLStatementResult} from "@/store/ksql/types";
 
     @Component({
-        components: {KSQLQueryContent, KSQLResultsPane}
+        components: {KSQLQueryContent, KSQLResultsPane, KSQLQueryToolbar}
     })
     export default class KSQLQueryEditor extends Vue implements ErrorListenerInterface {
 
@@ -71,19 +76,19 @@
 
         }
 
-        private reportAmbiguity(recognizer: any, dfa: any, startIndex: number, stopIndex: number, exact: any, ambigAlts: any, configs: any): void {
+        reportAmbiguity(recognizer: any, dfa: any, startIndex: number, stopIndex: number, exact: any, ambigAlts: any, configs: any): void {
             console.log('reportAmbiguity');
         }
 
-        private reportAttemptingFullContext(recognizer: any, dfa: any, startIndex: number, stopIndex: number, conflictingAlts: any, configs: any): void {
+        reportAttemptingFullContext(recognizer: any, dfa: any, startIndex: number, stopIndex: number, conflictingAlts: any, configs: any): void {
             console.log('reportAttemptingFullContext');
         }
 
-        private reportContextSensitivity(recognizer: any, dfa: any, startIndex: number, stopIndex: number, prediction: any, configs: any): void {
+        reportContextSensitivity(recognizer: any, dfa: any, startIndex: number, stopIndex: number, prediction: any, configs: any): void {
             console.log('reportContextSensitivity');
         }
 
-        private syntaxError(recognizer: any, offendingSymbol: Token, line: number, column: number, msg: string, e: Error): void {
+        syntaxError(recognizer: any, offendingSymbol: Token, line: number, column: number, msg: string, e: Error): void {
             this.validationErrors.unshift({ line, column, msg });
         }
 

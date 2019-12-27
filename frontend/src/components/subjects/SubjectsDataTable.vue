@@ -17,7 +17,6 @@
 <script lang="ts">
 import {Component, Prop, Vue} from 'vue-property-decorator';
 import {TableHeader} from 'vuetify/src/components/VDataTable/mixins/header';
-import {Resource} from "@/jsonapi";
 
 interface TableRow {
     name: string;
@@ -27,7 +26,7 @@ interface TableRow {
 export default class SubjectsDataTable extends Vue {
 
     @Prop()
-    public readonly data?: Resource<{ name: string }>[];
+    public readonly data?: { name: string }[];
 
     @Prop()
     public search: string = "";
@@ -46,7 +45,7 @@ export default class SubjectsDataTable extends Vue {
         if (this.data) {
             return this.data.map((attrs) => {
                 return {
-                    "name": attrs.attributes.name
+                    "name": attrs.name
                 };
             });
         } else {

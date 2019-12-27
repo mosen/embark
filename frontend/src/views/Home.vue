@@ -22,10 +22,11 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import ConnectStatus from '@/components/ConnectStatus.vue';
-import RegistryStatus from "@/components/RegistryStatus.vue";
-import BrokerStatus from "@/components/BrokerStatus.vue";
-import KSQLStatus from "@/components/ksql/KSQLStatus.vue";
+
+import ConnectStatus from '@/components/dashboard/ConnectStatus.vue';
+import RegistryStatus from "@/components/dashboard/RegistryStatus.vue";
+import BrokerStatus from "@/components/dashboard/BrokerStatus.vue";
+import KSQLStatus from "@/components/dashboard/KSQLStatus.vue";
 
 @Component({
     components: {

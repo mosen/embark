@@ -1,11 +1,12 @@
 import {Mutation} from "vuex";
 import {ConsumerGroupsState} from "@/store/consumer_groups/index";
 import {
-    ConsumerGroupDescriptionResponseDto,
-    ConsumerGroupOffsetsResponseDto,
-    ConsumerGroupsResponseDto
+    ConsumerGroupDescription,
+    ConsumerGroupOffset,
+    ConsumerGroup,
 } from "@/store/consumer_groups/types";
 import {ErrorMutation, SuccessMutation} from "@/store/mutations";
+
 
 export const consumerGroupsRequested: Mutation<ConsumerGroupsState> = (state): void => {
     state.loading = true;
@@ -19,7 +20,7 @@ export const consumerGroupsError: ErrorMutation<ConsumerGroupsState> = (state, p
     state.errorMessage = payload.message;
 };
 
-export const consumerGroupsReplace: SuccessMutation<ConsumerGroupsState, ConsumerGroupsResponseDto> = (state, payload): void => {
+export const consumerGroupsReplace: SuccessMutation<ConsumerGroupsState, ConsumerGroup[]> = (state, payload): void => {
     state.data = payload.data;
     state.loading = false;
     state.hasError = false;
@@ -35,7 +36,7 @@ export const consumerGroupError: ErrorMutation<ConsumerGroupsState> = (state, pa
     state.errorMessage = payload.message;
 };
 
-export const consumerGroupReplace: SuccessMutation<ConsumerGroupsState, ConsumerGroupDescriptionResponseDto> = (state, payload): void => {
+export const consumerGroupReplace: SuccessMutation<ConsumerGroupsState, ConsumerGroupDescription> = (state, payload): void => {
     state.current = payload.data;
     state.loading = false;
     state.hasError = false;
@@ -53,7 +54,7 @@ export const consumerGroupOffsetsError: ErrorMutation<ConsumerGroupsState> = (st
     state.errorMessage = payload.message;
 };
 
-export const consumerGroupOffsetsReplace: SuccessMutation<ConsumerGroupsState, ConsumerGroupOffsetsResponseDto> = (state, payload): void => {
+export const consumerGroupOffsetsReplace: SuccessMutation<ConsumerGroupsState, ConsumerGroupOffset[]> = (state, payload): void => {
     state.offsets = payload.data;
     state.loading = false;
     state.hasError = false;

@@ -1,8 +1,8 @@
 import Axios from "axios";
 import {
-    CreateTopicRequestDto, NewTopic,
-    TopicConfigurationResponseDto, TopicDescription,
-    TopicDescriptionResponseDto, TopicListing,
+    NewTopic,
+    TopicDescription,
+    TopicListing,
 } from "@/store/topics/types";
 import {Action} from "vuex";
 import {TopicsState} from "@/store/topics/index";
@@ -22,7 +22,7 @@ export const topics: Action<TopicsState, RootState> = async ({state, commit, roo
 export const topic: Action<TopicsState, RootState> = async ({state, commit, rootState}, name: string): Promise<void> => {
     commit('topicRequested', { name });
     try {
-        const response = await Axios.get<TopicDescriptionResponseDto>(`${rootState.endpoints.adminApi}/v1/topics/${name}`);
+        const response = await Axios.get<TopicDescription>(`${rootState.endpoints.adminApi}/v1/topics/${name}`);
         commit('topicReplace', response.data);
     } catch (e) {
         commit('topicError', e);

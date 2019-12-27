@@ -1,5 +1,3 @@
-import {JSONAPIDocument} from "@/jsonapi";
-
 export interface TopicListing {
     internal: boolean;
     name: string;

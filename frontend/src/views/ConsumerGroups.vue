@@ -33,7 +33,7 @@
 
 <script lang="ts">
 import {Component, Vue} from 'vue-property-decorator';
-import ConsumerGroupsDataTable from "@/components/ConsumerGroupsDataTable.vue";
+import ConsumerGroupsDataTable from "@/components/consumer-groups/ConsumerGroupsDataTable.vue";
 
 @Component({
     components: {ConsumerGroupsDataTable}

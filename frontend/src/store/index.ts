@@ -120,7 +120,7 @@ export default new Vuex.Store<RootState>({
         cluster: {
             loading: false,
             error: false,
-
+            clusterId: "",
             nodes: [],
         },
 

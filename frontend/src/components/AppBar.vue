@@ -15,6 +15,7 @@
 
 <script lang="ts">
 import {Component, Vue} from 'vue-property-decorator';
+
 import ProfileMenu from "@/components/ProfileMenu.vue";
 
 @Component({

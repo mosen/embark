@@ -52,9 +52,9 @@
 <script lang="ts">
 import {Component, Prop, Vue} from 'vue-property-decorator';
 import {TopicDescription, TopicPartition} from '@/store/topics/types';
-import Partitions from "@/components/Partitions.vue";
-import Configurations from "@/components/Configurations.vue";
-import Permissions from '@/components/Permissions.vue';
+import Partitions from "@/components/topics/Partitions.vue";
+import Configurations from "@/components/topics/Configurations.vue";
+import Permissions from '@/components/topics/Permissions.vue';
 import AclBinding = Kafka.AclBinding;
 import {ConfigEntry} from "@/store/types";
 

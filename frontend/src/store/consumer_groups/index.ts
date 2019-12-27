@@ -1,4 +1,4 @@
-import {ConsumerGroupDescriptionResponseDto, ConsumerGroupOffsetsResponseDto, ConsumerGroupsResponseDto} from "./types";
+import {ConsumerGroupDescription, ConsumerGroupOffset, ConsumerGroup} from "./types";
 import {Module} from "vuex";
 import {RootState} from "@/store";
 
@@ -6,10 +6,10 @@ import * as actions from "./actions";
 import * as mutations from "./mutations";
 
 export interface ConsumerGroupsState {
-    current?: ConsumerGroupDescriptionResponseDto;
+    current: ConsumerGroupDescription | null;
     // configuration?: TopicConfigurationResponseDto;
-    data?: ConsumerGroupsResponseDto;
-    offsets?: ConsumerGroupOffsetsResponseDto;
+    data: ConsumerGroup[] | null;
+    offsets: ConsumerGroupOffset[] | null;
     loading: boolean;
     hasError: boolean;
     errorMessage?: string;
@@ -17,10 +17,10 @@ export interface ConsumerGroupsState {
 
 export const ConsumerGroupsModule: Module<ConsumerGroupsState, RootState> = {
     state: {
-        current: undefined,
+        current: null,
         // configuration: {},
-        data: undefined,
-        offsets: undefined,
+        data: null,
+        offsets: null,
         loading: false,
         hasError: false,
         errorMessage: undefined,

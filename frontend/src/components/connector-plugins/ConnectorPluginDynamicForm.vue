@@ -48,7 +48,7 @@ export default class ConnectorPluginDynamicForm extends Vue {
         if (this.$store.state.connectorPlugins.validation === null) {
             return {};
         } else {
-            return this.$store.state.connectorPlugins.validation.configs.reduce((memo, item: ConnectorPluginValidationItem) => {
+            return this.$store.state.connectorPlugins.validation.configs.reduce((memo: { [groupName: string]: ConnectorPluginValidationItem[] }, item: ConnectorPluginValidationItem) => {
                 let groupName = item.definition.group != 'null' ? item.definition.group : 'Other';
 
                 if (!memo[groupName]) {

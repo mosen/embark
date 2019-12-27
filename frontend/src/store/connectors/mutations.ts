@@ -1,7 +1,7 @@
 import {Mutation} from "vuex";
 import {ErrorMutation, SuccessMutation} from "@/store/mutations";
 import {ConnectorsState} from "@/store/connectors/index";
-import {ConnectorResponseDto, ConnectorsResponseDto, ConnectorStatusResponseDto} from "@/store/connectors/types";
+import {ConnectorResponse, ConnectorsResponse, ConnectorStatusResponse} from "@/store/connectors/types";
 
 
 export const connectorsRequested: Mutation<ConnectorsState> = (state): void => {
@@ -16,7 +16,7 @@ export const connectorsError: ErrorMutation<ConnectorsState> = (state, payload: 
     state.errorMessage = payload.message;
 };
 
-export const connectorsReplace: SuccessMutation<ConnectorsState, ConnectorsResponseDto> = (state, payload): void => {
+export const connectorsReplace: SuccessMutation<ConnectorsState, ConnectorsResponse> = (state, payload): void => {
     state.data = payload.data;
     state.loading = false;
     state.hasError = false;
@@ -32,13 +32,13 @@ export const connectorError: ErrorMutation<ConnectorsState> = (state, payload: E
     state.errorMessage = payload.message;
 };
 
-export const connectorReplace: SuccessMutation<ConnectorsState, ConnectorResponseDto> = (state, payload): void => {
+export const connectorReplace: SuccessMutation<ConnectorsState, ConnectorResponse> = (state, payload): void => {
     state.current = payload.data;
     state.loading = false;
     state.hasError = false;
 };
 
-export const connectorStatusReplace: SuccessMutation<ConnectorsState, ConnectorStatusResponseDto> = (state, payload): void => {
+export const connectorStatusReplace: SuccessMutation<ConnectorsState, ConnectorStatusResponse> = (state, payload): void => {
     state.currentStatus = payload.data;
     state.loading = false;
     state.hasError = false;

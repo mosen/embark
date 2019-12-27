@@ -25,7 +25,7 @@
 <script lang="ts">
 import {Component, Prop, Vue} from 'vue-property-decorator';
 import {TopicPartition} from "@/store/topics/types";
-import Partition from "@/components/Partition.vue";
+import Partition from "./Partition.vue";
 
 interface PartitionLeaders {
     [leader: string]: TopicPartition[];

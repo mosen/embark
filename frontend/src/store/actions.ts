@@ -1,7 +1,6 @@
 import Axios from "axios";
 import {Action} from "vuex";
 import {RootState} from "@/store";
-import {TopicsResponseDto} from "@/store/topics/types";
 import {ClusterNode} from "@/store/types";
 import {GlobalConfiguration} from "@/store/subjects/types";
 import {KSQLServerInfoResponse} from "@/store/ksql/types";
@@ -9,7 +8,7 @@ import {KSQLServerInfoResponse} from "@/store/ksql/types";
 export const fetchConnectInfo: Action<RootState, RootState> = async ({state, commit }): Promise<void> => {
     commit('connectInfoRequested');
     try {
-        const response = await Axios.get<TopicsResponseDto>(`${state.endpoints.connectApi}/`);
+        const response = await Axios.get<any>(`${state.endpoints.connectApi}/`);
         commit('connectInfoReplace', response.data);
     } catch (e) {
         commit('connectInfoError', e);

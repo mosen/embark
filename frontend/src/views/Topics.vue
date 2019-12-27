@@ -20,7 +20,7 @@
 
 <script lang="ts">
 import {Component, Vue} from 'vue-property-decorator';
-import TopicsDataTable from '../components/topics/TopicsDataTable.vue';
+import TopicsDataTable from '@/components/topics/TopicsDataTable.vue';
 
 @Component({
     components: {TopicsDataTable}

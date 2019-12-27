@@ -36,8 +36,8 @@
 
 <script lang="ts">
 import {Component, Vue} from 'vue-property-decorator';
-import {SchemaDetailAttr} from '@/store/subjects/types';
-import Schema from "@/components/Schema.vue";
+import {SchemaDetail} from '@/store/subjects/types';
+import Schema from "@/components/subjects/Schema.vue";
 
 
 @Component({
@@ -52,11 +52,11 @@ export default class Subject extends Vue {
         // this.$store.dispatch('subjectSchemaVersions', this.$route.params.name);
     }
 
-    public get latestSchema(): SchemaDetailAttr {
+    public get latestSchema(): SchemaDetail | null {
         if (this.$store.state.subjects.latestSchema) {
             return this.$store.state.subjects.latestSchema.attributes;
         } else {
-            return {};
+            return null;
         }
     }
 }

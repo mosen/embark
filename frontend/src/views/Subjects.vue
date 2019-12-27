@@ -33,7 +33,7 @@
 
 <script lang="ts">
 import {Component, Vue} from 'vue-property-decorator';
-import SubjectsDataTable from "@/components/SubjectsDataTable.vue";
+import SubjectsDataTable from "@/components/subjects/SubjectsDataTable.vue";
 
 @Component({
     components: {SubjectsDataTable}

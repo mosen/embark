@@ -44,7 +44,6 @@
 <script lang="ts">
     import {Component, Prop, Vue} from 'vue-property-decorator';
     import AclBinding = Kafka.AclBinding;
-    import {Resource} from "@/jsonapi";
 
     interface PrincipalPermissionEntry {
         permissionType: string;
@@ -62,19 +61,19 @@
     export default class Permissions extends Vue {
 
         @Prop()
-        private bindings!: Resource<AclBinding>[];
+        private bindings!: AclBinding[];
 
         public get principals() {
             if (!this.bindings) { return {}; }
-            return this.bindings.reduce((memo: PrincipalPermissionsModel, binding: Resource<AclBinding>): PrincipalPermissionsModel => {
-                if (!memo.hasOwnProperty(binding.attributes.entry.principal)) { memo[binding.attributes.entry.principal] = []; }
+            return this.bindings.reduce((memo: PrincipalPermissionsModel, binding: AclBinding): PrincipalPermissionsModel => {
+                if (!memo.hasOwnProperty(binding.entry.principal)) { memo[binding.entry.principal] = []; }
                 let perm = {
-                  permissionType: binding.attributes.entry.permissionType,
-                  operation: binding.attributes.entry.operation,
-                  host: binding.attributes.entry.host,
+                  permissionType: binding.entry.permissionType,
+                  operation: binding.entry.operation,
+                  host: binding.entry.host,
                 };
 
-                memo[binding.attributes.entry.principal].unshift(perm);
+                memo[binding.entry.principal].unshift(perm);
                 return memo;
             }, {})
         }

@@ -2,13 +2,13 @@ import {Module} from "vuex";
 import {RootState} from "@/store";
 import * as actions from "./actions";
 import * as mutations from "./mutations";
-import {ConnectorResponseDto, ConnectorsResponseDto, ConnectorStatusResponseDto} from "./types";
+import {ConnectorResponse, ConnectorsResponse, ConnectorStatusResponse} from "./types";
 
 export interface ConnectorsState {
-    current?: ConnectorResponseDto;
-    currentStatus?: ConnectorStatusResponseDto;
+    current: ConnectorResponse | null;
+    currentStatus: ConnectorStatusResponse | null;
     // configuration?: TopicConfigurationResponseDto;
-    data?: ConnectorsResponseDto;
+    data: ConnectorsResponse | null;
     loading: boolean;
     hasError: boolean;
     errorMessage?: string;
@@ -16,10 +16,10 @@ export interface ConnectorsState {
 
 export const ConnectorsModule: Module<ConnectorsState, RootState> = {
     state: {
-        current: undefined,
-        currentStatus: undefined,
+        current: null,
+        currentStatus: null,
         // configuration: {},
-        data: undefined,
+        data: null,
         loading: false,
         hasError: false,
         errorMessage: undefined,

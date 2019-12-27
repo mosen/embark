@@ -1,32 +1,36 @@
 <template>
-    <div>
-        <KSQLQueryToolbar @execute="execute" @check="validate" />
-        <v-sheet class="editor-content">
+    <div class="editor">
+        <slot name="before-editor" />
+        <div class="editor-content">
             <div class="editor-gutter pa-2">
                 <div v-for="lineno in lineCount" :key="lineno">
                     {{ lineno }}
                 </div>
             </div>
-            <pre ref="editor"
-                 class="editor-text pa-2"
-                 contenteditable="true"
-                 spellCheck="false"
-                 autocapitalize="off"
-                 @keydown.prevent.tab="indent"
-                 @keydown.prevent.shift.tab="unindent"
-                 @keydown="onKeydown"
-                 @keyup="onKeyup"
-                 @keyup.enter="onEnterKeyup"
-                 @keyup.backspace="onBackspaceKeyup"
-                 @keydown.meta.enter="execute"
-                 @blur="onBlur"
-                 @paste="onPaste"
-                 @cut="onCut"
-                 @copy="onCopy"
-                 v-html="content"
-                 autofocus
-            ></pre>
-        </v-sheet>
+            <pre>
+                <code ref="editor"
+                     class="editor-text pa-2"
+                     contenteditable="true"
+                     spellCheck="false"
+                     autocapitalize="off"
+                     v-html="content"
+                     autofocus
+                     @keydown.prevent.tab="indent"
+                     @keydown.prevent.shift.tab="unindent"
+                     @keydown="onKeydown"
+                     @keyup="onKeyup"
+                     @keyup.enter="onEnterKeyup"
+                     @keyup.backspace="onBackspaceKeyup"
+                     @keydown.meta.enter="execute"
+                     @blur="onBlur"
+                     @paste="onPaste"
+                     @cut="onCut"
+                     @copy="onCopy"
+                >
+                </code>
+            </pre>
+        </div>
+        <slot name="after-editor" />
     </div>
 </template>
 
@@ -103,17 +107,18 @@
 
         // Event Handling for contenteditable area
 
-        private onKeyup(e: any) {
+        private onKeyup(e: KeyboardEvent) {
+            if (e.target === null) return;
             this.content = e.target.innerHTML;
             this._contentText = e.target.innerText;
         }
 
-        private onKeydown(e) {
+        private onKeydown(e: KeyboardEvent) {
 
         }
 
         // Insert 4 spaces instead of dropping focus from the editable element.
-        private indent(e: any) {
+        private indent(e: KeyboardEvent) {
             const selection = window.getSelection();
 
             if (!selection || selection.type === 'None' || selection.type === 'Caret') {
@@ -128,38 +133,38 @@
             }
         }
 
-        private unindent(e: any) {
+        private unindent(e: KeyboardEvent) {
             for (let i = 0; i < this.tabSize; i++) {
                 document.execCommand("delete", false, "");
             }
         }
 
-        private onEnterKeyup(e: any) {
+        private onEnterKeyup(e: KeyboardEvent) {
             console.log('enter');
             this.calculateLineCount();
         }
 
         // Deleting a selection can possibly change the number of lines
-        private onBackspaceKeyup(e: any) {
+        private onBackspaceKeyup(e: KeyboardEvent) {
             this.calculateLineCount();
         }
 
-        public onBlur(e: any) {
+        public onBlur(e: FocusEvent) {
             console.log(e);
         }
 
         // Cutting a selection can change the number of lines.
-        public onCut(e: any) {
+        public onCut(e: ClipboardEvent) {
             console.log('cut event');
             this.calculateLineCount();
         }
 
-        public onCopy(e: any) {
+        public onCopy(e: ClipboardEvent) {
             console.log('copy event');
         }
 
         // When using contenteditable, pasted text comes in with full HTML formatting, which we don't want in this case.
-        public onPaste(e: any) {
+        public onPaste(e: ClipboardEvent) {
             console.log('paste event');
             console.log('TODO: strip formatting');
             console.log(e);

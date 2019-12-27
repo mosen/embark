@@ -21,7 +21,6 @@
 <script lang="ts">
 import {Component, Prop, Vue} from 'vue-property-decorator';
 import {TableHeader} from 'vuetify/src/components/VDataTable/mixins/header';
-import {Resource} from "@/jsonapi";
 
 interface TableRow {
     task: string;

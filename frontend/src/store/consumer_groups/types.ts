@@ -1,4 +1,3 @@
-import {JSONAPIDocument} from "@/jsonapi";
 import {ClusterNode} from "@/store/types";
 
 export enum ConsumerGroupState {
@@ -6,14 +5,12 @@ export enum ConsumerGroupState {
     Dead = "Dead",
 }
 
-export interface ConsumerGroupAttr {
+export interface ConsumerGroup {
     coordinator: ClusterNode;
     groupId: string;
     isSimpleConsumerGroup: boolean;
     state: ConsumerGroupState;
 }
-
-export type ConsumerGroupsResponseDto = JSONAPIDocument<ConsumerGroupAttr>;
 
 export interface Consumer {
     clientId: string;
@@ -21,17 +18,14 @@ export interface Consumer {
     host: string;
 }
 
-export interface ConsumerGroupDescription extends ConsumerGroupAttr {
+export interface ConsumerGroupDescription extends ConsumerGroup {
     partitionAssignor: string;
     members: Consumer[];
 }
 
-export type ConsumerGroupDescriptionResponseDto = JSONAPIDocument<ConsumerGroupDescription>;
 
 export interface ConsumerGroupOffset {
     partition: number;
     topic: string;
     offset: number;
 }
-
-export type ConsumerGroupOffsetsResponseDto = JSONAPIDocument<ConsumerGroupOffset>;

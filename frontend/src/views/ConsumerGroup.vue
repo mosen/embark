@@ -75,13 +75,11 @@
 <script lang="ts">
 import {Component, Prop, Vue} from 'vue-property-decorator';
 import {Consumer, ConsumerGroupDescription, ConsumerGroupOffset} from '@/store/consumer_groups/types';
-import {KafkaNode} from "@/store/topics/types";
+import {Node} from "@/store/topics/types";
 import {TableHeader} from 'vuetify/src/components/VDataTable/mixins/header';
 
 
-@Component({
-    components: {}
-})
+@Component({})
 export default class ConsumerGroup extends Vue {
 
     public tabs: string = "cg-tabs-1";
@@ -112,7 +110,7 @@ export default class ConsumerGroup extends Vue {
         }
     ];
 
-    public get coordinator(): KafkaNode | null {
+    public get coordinator(): Node | null {
         if (this.$store.state.consumerGroups.current) {
             return this.$store.state.consumerGroups.current.attributes.coordinator;
         } else {
