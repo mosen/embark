@@ -3,10 +3,9 @@
         <v-row>
             <v-col>
                 <h1>New Connector</h1>
-                <h3>{{ this.$route.params.classname }}</h3>
             </v-col>
         </v-row>
-        <ConnectorPluginDynamicForm />
+        <ConnectorPluginDynamicForm :connector-class="this.$route.params.classname"/>
     </v-container>
 </template>
 

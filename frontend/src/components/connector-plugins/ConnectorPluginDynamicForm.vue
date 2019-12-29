@@ -1,12 +1,18 @@
 <template>
     <v-form>
         <v-container>
+            <!-- static section which is common across all connectors -->
+            <v-row>
+                <v-col cols="12">
+                    <v-text-field flat name="connector.class" label="Connector Class" :value="connectorClass" readonly />
+                </v-col>
+            </v-row>
             <v-row>
                 <v-col cols="8">
-                    <v-text-field flat label="Connector Name" hint="Globally Unique Connector Name" />
+                    <v-text-field flat name="name" label="Connector Name" hint="Globally Unique Connector Name" />
                 </v-col>
                 <v-col cols="4">
-                    <v-text-field flat label="Tasks Maximum" type="number" />
+                    <v-text-field flat name="tasks.max" label="Tasks Maximum" type="number" />
                 </v-col>
             </v-row>
             <v-row>
@@ -36,6 +42,12 @@ import ConfigField from "@/components/connector-plugins/ConfigField.vue";
 })
 export default class ConnectorPluginDynamicForm extends Vue {
 
+    @Prop({})
+    private readonly connectorClass!: string;
+
+    @Prop({ default: ["connector.class", "name", "tasks.max"] })
+    private readonly omitProps!: string[];
+
     public get groups(): string[] {
         if (this.$store.state.connectorPlugins.validation === null) {
             return [];
@@ -49,6 +61,8 @@ export default class ConnectorPluginDynamicForm extends Vue {
             return {};
         } else {
             return this.$store.state.connectorPlugins.validation.configs.reduce((memo: { [groupName: string]: ConnectorPluginValidationItem[] }, item: ConnectorPluginValidationItem) => {
+                if (this.omitProps.indexOf(item.definition.name) !== -1) { return memo; }
+
                 let groupName = item.definition.group != 'null' ? item.definition.group : 'Other';
 
                 if (!memo[groupName]) {
