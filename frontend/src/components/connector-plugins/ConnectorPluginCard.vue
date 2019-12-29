@@ -1,5 +1,5 @@
 <template>
-    <v-card tile>
+    <v-card tile class="fill-height" :to="`/new/connector/class/${data.class}`">
         <v-img v-if="metadata.logo" :src="metadata.logo"
                height="80px"
                gradient="to top, rgba(0,0,0,.1), rgba(0,0,0,.3)"

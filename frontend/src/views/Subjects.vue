@@ -1,33 +1,23 @@
 <template>
     <v-container>
-        <v-layout>
-            <v-flex xs12>
+        <v-row>
+            <v-col cols="12">
                 <v-expand-transition>
                     <v-alert v-if="hasError" type="error" colored-border border="left">
                         {{ errorMessage }}
                     </v-alert>
                 </v-expand-transition>
-            </v-flex>
-        </v-layout>
-        <v-layout wrap>
-            <v-flex xs12 class="mb-5">
-                <v-text-field
-                        v-model="search"
-                        prepend-inner-icon="mdi-magnify"
-                        append-icon="mdi-cross"
-                        label="Search"
-                        single-line
-                        hide-details
-                ></v-text-field>
-            </v-flex>
-            <v-flex xs12>
+            </v-col>
+        </v-row>
+        <v-row wrap>
+            <v-col cols="12">
                 <SubjectsDataTable
                         :data="subjects"
                         :search="search"
                         :loading="loading"
                 ></SubjectsDataTable>
-            </v-flex>
-        </v-layout>
+            </v-col>
+        </v-row>
     </v-container>
 </template>
 

@@ -1,20 +1,20 @@
 <template>
     <v-container>
-        <v-layout>
-            <v-flex xs12>
+        <v-row>
+            <v-col cols="12">
                 <v-expand-transition>
                     <v-alert v-if="hasError" type="error" colored-border border="left">
                         {{ errorMessage }}
                     </v-alert>
                 </v-expand-transition>
-            </v-flex>
-        </v-layout>
+            </v-col>
+        </v-row>
 
-        <v-layout wrap>
-            <v-flex xs12>
+        <v-row wrap>
+            <v-col cols="12">
                 <TopicsDataTable></TopicsDataTable>
-            </v-flex>
-        </v-layout>
+            </v-col>
+        </v-row>
     </v-container>
 </template>
 

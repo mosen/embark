@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <h1 class="display-1">Services</h1>
+    <h1 class="display-1 pt-2 pb-2">Services</h1>
     <v-row>
       <v-col>
         <BrokerStatus />

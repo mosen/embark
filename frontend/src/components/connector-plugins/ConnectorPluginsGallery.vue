@@ -1,7 +1,7 @@
 <template>
     <div v-if="data">
         <v-row>
-            <v-col lg="3" v-for="(plugin, idx) in data" :key="plugin.id">
+            <v-col xs="12" sm="6" md="4" lg="4" xl="3" v-for="(plugin, idx) in data" :key="plugin.id">
                 <ConnectorPluginCard
                         v-if="connectors.plugins.hasOwnProperty(plugin.class)"
                         :data="plugin"

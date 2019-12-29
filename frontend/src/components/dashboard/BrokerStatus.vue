@@ -1,5 +1,5 @@
 <template>
-    <v-card :loading="loading" flat tile>
+    <v-card :loading="loading" flat tile class="fill-height">
         <v-card-title>
             <v-icon v-if="!error" color="green" class="mr-4">mdi-circle</v-icon>
             <v-icon v-else color="red" class="mr-4">mdi-cloud-alert</v-icon>

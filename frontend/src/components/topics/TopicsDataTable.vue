@@ -14,34 +14,33 @@
             @toggle-select-all="handleAllSelectionChange"
     >
         <template v-slot:top>
-            <v-toolbar flat>
-
-                <NewTopicDialog></NewTopicDialog>
-
-                <v-divider vertical class="ma-5"  dark />
-
-                <v-text-field
-                        v-model="search"
-                        prepend-inner-icon="mdi-magnify"
-                        append-icon="mdi-cross"
-                        label="Search"
-                        single-line
-                        hide-details
-                        clearable
-                ></v-text-field>
-
-                <v-divider vertical class="ma-5" dark />
-
-                <TopicsActionMenu :selection="selection" @delete-selection="deleteSelectedTopics" />
-            </v-toolbar>
-
+            <v-row>
+                <v-col cols="12">
+                    <v-toolbar flat>
+                        <NewTopicDialog></NewTopicDialog>
+                        <TopicsActionMenu :selection="selection" @delete-selection="deleteSelectedTopics" />
+                    </v-toolbar>
+                </v-col>
+            </v-row>
+            <v-row>
+                <v-col cols="12">
+                    <v-text-field
+                            v-model="search"
+                            prepend-inner-icon="mdi-magnify"
+                            append-icon="mdi-cross"
+                            label="Search"
+                            single-line
+                            flat
+                            hide-details
+                            clearable
+                            class="pa-4"
+                    ></v-text-field>
+                </v-col>
+            </v-row>
         </template>
         <template v-slot:item.name="{ item }">
             <router-link :to="`/topic/${item.name}`">{{item.name}}</router-link>
         </template>
-<!--        <template v-slot:item.action="{ item }">-->
-<!--            <a @click="confirmDelete(item.name)"><v-icon>mdi-trash-can-outline</v-icon></a>-->
-<!--        </template>-->
     </v-data-table>
 </template>
 
