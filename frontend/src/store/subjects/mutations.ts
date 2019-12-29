@@ -16,25 +16,25 @@ export const subjectsError: ErrorMutation<SubjectsState> = (state, payload: Erro
     state.errorMessage = payload.message;
 };
 
-export const subjectsReplace: SuccessMutation<SubjectsState, Subject[]> = (state, payload): void => {
-    state.data = payload.data;
+export const subjectsReplace: Mutation<SubjectsState> = (state, payload: string[]): void => {
+    state.data = payload;
     state.loading = false;
     state.hasError = false;
 };
 
-export const subjectSchemaLatestRequested: Mutation<SubjectsState> = (state): void => {
-    state.loading = true;
+export const subjectSchemaVersionRequested: Mutation<SubjectsState> = (state, payload: { subject: string; version: string }): void => {
+    state.schema.loading = [payload.version];
 };
 
-export const subjectSchemaLatestError: ErrorMutation<SubjectsState> = (state, payload: Error): void => {
-    state.loading = false;
+export const subjectSchemaVersionError: ErrorMutation<SubjectsState> = (state, payload: Error): void => {
     state.hasError = true;
+    state.schema.loading = [];
     state.errorMessage = payload.message;
 };
 
-export const subjectSchemaLatestReplace: SuccessMutation<SubjectsState, SchemaDetail> = (state, payload): void => {
-    state.latestSchema = payload.data;
-    state.loading = false;
+export const subjectSchemaVersionReplace: Mutation<SubjectsState> = (state, payload: SchemaDetail): void => {
+    state.schema.versions["latest"] = payload;
+    state.schema.loading = [];
     state.hasError = false;
 };
 

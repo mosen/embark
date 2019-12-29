@@ -15,18 +15,12 @@ export interface KSQLState {
         data: KSQLServerInfo | null;
     };
     query: string;
-    terminal: {
-        lines: string[];
-    };
 }
 
 export const KSQLModule: Module<KSQLState, RootState> = {
     state: {
         loading: false,
         results: [],
-        terminal: {
-            lines: []
-        },
         query: "",
         info: {
             loading: false,

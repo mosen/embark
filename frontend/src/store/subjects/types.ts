@@ -4,10 +4,14 @@ export interface Subject {
 }
 
 export interface Schema {
+
+}
+
+export interface JSONEncodedSchema {
     schema: string;
 }
 
-export interface SchemaDetail extends Schema {
+export interface SchemaDetail extends JSONEncodedSchema {
     subject: string;
     version: number;
     id: number;

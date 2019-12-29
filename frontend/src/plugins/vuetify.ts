@@ -13,13 +13,13 @@ import {VuetifyPreset} from "vuetify/types/presets";
 Vue.use(Vuetify);
 
 const preset: Partial<VuetifyPreset> = {
-    // theme: {
-    //     dark: false,
-    //     themes: {
-    //         light: doelight,
-    //         dark: doedark,
-    //     },
-    // },
+    theme: {
+        dark: true,
+        // themes: {
+        //     light: embarklight,
+        //     dark: embarkdark,
+        // },
+    },
     icons: {
         iconfont: 'mdi',
     }

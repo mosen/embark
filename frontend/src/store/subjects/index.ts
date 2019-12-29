@@ -4,9 +4,14 @@ import * as actions from "./actions";
 import * as mutations from "./mutations";
 import {SchemaDetail, Subject} from "./types";
 
+export interface SchemaState {
+    versions: { [versionName: string]: SchemaDetail; };
+    loading: string[];
+}
+
 export interface SubjectsState {
-    latestSchema?: SchemaDetail;
-    data?: Subject[];
+    schema: SchemaState;
+    data: string[];
     loading: boolean;
     hasError: boolean;
     errorMessage?: string;
@@ -14,8 +19,11 @@ export interface SubjectsState {
 
 export const SubjectsModule: Module<SubjectsState, RootState> = {
     state: {
-        latestSchema: undefined,
-        data: undefined,
+        schema: {
+            versions: {},
+            loading: [],
+        },
+        data: [],
         loading: false,
         hasError: false,
         errorMessage: undefined,

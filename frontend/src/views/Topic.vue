@@ -1,16 +1,14 @@
 <template>
     <v-container>
-        <v-layout>
-            <v-flex xs12>
-                <v-sheet>
-                    <h1 class="display-1">{{ $route.params.name }}</h1>
-                </v-sheet>
-            </v-flex>
-        </v-layout>
-        <v-layout>
-            <v-flex xs12>
+        <v-row>
+            <v-col cols="12">
+                <h1 class="display-1 pt-2 pb-2">{{ $route.params.name }}</h1>
+            </v-col>
+        </v-row>
+        <v-row>
+            <v-col cols="6">
+                <v-subheader>summary</v-subheader>
                 <v-list>
-                    <v-subheader>summary</v-subheader>
                     <v-list-item>
                         <v-list-item-icon>
                             <v-icon>mdi-animation</v-icon>
@@ -22,8 +20,31 @@
                         </v-list-item-content>
                     </v-list-item>
                 </v-list>
-            </v-flex>
-        </v-layout>
+            </v-col>
+            <v-col cols="6">
+                <v-subheader>schema</v-subheader>
+                <v-list>
+                    <v-list-item>
+                        <v-list-item-icon>
+                            <v-icon>mdi-key</v-icon>
+                        </v-list-item-icon>
+                        <v-list-item-content>
+                            <v-list-item-title>Key Schema</v-list-item-title>
+                            <v-list-item-subtitle>NAME</v-list-item-subtitle>
+                        </v-list-item-content>
+                    </v-list-item>
+                    <v-list-item>
+                        <v-list-item-icon>
+                            <v-icon>mdi-database</v-icon>
+                        </v-list-item-icon>
+                        <v-list-item-content>
+                            <v-list-item-title>Value Schema</v-list-item-title>
+                            <v-list-item-subtitle>NAME</v-list-item-subtitle>
+                        </v-list-item-content>
+                    </v-list-item>
+                </v-list>
+            </v-col>
+        </v-row>
         <v-layout>
             <v-flex xs12>
                 <v-tabs v-model="tabs">

@@ -26,7 +26,7 @@ interface TableRow {
 export default class SubjectsDataTable extends Vue {
 
     @Prop()
-    public readonly data?: { name: string }[];
+    public readonly data?: string[];
 
     @Prop()
     public search: string = "";
@@ -43,11 +43,7 @@ export default class SubjectsDataTable extends Vue {
 
     public get items(): TableRow[] {
         if (this.data) {
-            return this.data.map((attrs) => {
-                return {
-                    "name": attrs.name
-                };
-            });
+            return this.data.map(schemaName => ({ "name": schemaName }));
         } else {
             return [];
         }

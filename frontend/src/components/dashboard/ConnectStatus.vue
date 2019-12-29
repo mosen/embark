@@ -10,12 +10,7 @@
                 Unable to connect
             </p>
             <v-list v-else class="transparent">
-                <v-list-item>
-                    <v-list-item-content>
-                        <v-list-item-title>URL</v-list-item-title>
-                        <v-list-item-subtitle>{{ url }}</v-list-item-subtitle>
-                    </v-list-item-content>
-                </v-list-item>
+
                 <v-list-item>
                     <v-list-item-content>
                         <v-list-item-title>Version</v-list-item-title>
@@ -28,12 +23,18 @@
 <!--                        <v-list-item-subtitle>{{ commit }}</v-list-item-subtitle>-->
 <!--                    </v-list-item-content>-->
 <!--                </v-list-item>-->
-<!--                <v-list-item>-->
-<!--                    <v-list-item-content>-->
-<!--                        <v-list-item-title>Cluster ID</v-list-item-title>-->
-<!--                        <v-list-item-subtitle>{{ kafka_cluster_id }}</v-list-item-subtitle>-->
-<!--                    </v-list-item-content>-->
-<!--                </v-list-item>-->
+                <v-list-item>
+                    <v-list-item-content>
+                        <v-list-item-title>Cluster ID</v-list-item-title>
+                        <v-list-item-subtitle>{{ kafka_cluster_id }}</v-list-item-subtitle>
+                    </v-list-item-content>
+                </v-list-item>
+                <v-list-item>
+                    <v-list-item-content>
+                        <v-list-item-title>URL</v-list-item-title>
+                        <v-list-item-subtitle>{{ url }}</v-list-item-subtitle>
+                    </v-list-item-content>
+                </v-list-item>
             </v-list>
         </v-card-text>
     </v-card>

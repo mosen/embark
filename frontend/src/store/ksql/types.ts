@@ -7,6 +7,7 @@ export interface KSQLCommandStatus {
 }
 
 export interface KSQLBaseResult {
+    "@type": string;
     statementText: string;
 }
 

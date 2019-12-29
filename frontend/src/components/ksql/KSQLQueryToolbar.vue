@@ -1,19 +1,19 @@
 <template>
-    <v-toolbar flat dense>
-        <v-btn @click="execute">
+    <div class="pb-1">
+        <v-btn :loading="loading" depressed @click="execute" class="mr-1">
             <v-icon v-if="loading">mdi-pause</v-icon>
             <v-icon v-else>mdi-play</v-icon>
         </v-btn>
-        <v-btn>
+        <v-btn depressed class="mr-1">
             <v-icon>mdi-undo</v-icon>
         </v-btn>
-        <v-btn>
+        <v-btn depressed class="mr-1">
             <v-icon>mdi-redo</v-icon>
         </v-btn>
-        <v-btn @click="check">
+        <v-btn @click="check" depressed class="mr-1">
             <v-icon>mdi-check</v-icon>
         </v-btn>
-    </v-toolbar>
+    </div>
 </template>
 
 <script lang="ts">
@@ -21,17 +21,18 @@
 
     @Component({})
     export default class KSQLQueryToolbar extends Vue {
+
         @Prop({ default: false })
         private readonly loading!: boolean;
 
         @Emit()
-        public execute() {
-
+        public execute(e: MouseEvent) {
+            return e;
         }
 
         @Emit()
-        public check() {
-
+        public check(e: MouseEvent) {
+            return e;
         }
     }
 </script>

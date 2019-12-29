@@ -2,11 +2,9 @@
     <v-container>
         <v-layout>
             <v-flex xs12>
-                <v-card flat>
-                    <v-card-text>
-                        <h1 class="display-1">{{ $route.params.name }}</h1>
-                    </v-card-text>
-                </v-card>
+
+                <h1 class="display-1">{{ $route.params.name }}</h1>
+
             </v-flex>
         </v-layout>
         <v-layout>
@@ -18,11 +16,15 @@
 
                 <v-tabs-items v-model="tabs">
                     <v-tab-item key="1" value="subject-tabs-1">
-                        <Schema :id="latestSchema.id"
-                                :subject="latestSchema.subject"
-                                :schema="JSON.parse(latestSchema.schema)"
-                                :version="latestSchema.version"
+                        <Schema v-if="!loading && schema"
+                                :id="schema.id"
+                                :subject="schema.subject"
+                                :schema="JSON.parse(schema.schema)"
+                                :version="schema.version"
                         />
+                        <v-alert v-if="loading">
+                            Loading
+                        </v-alert>
                     </v-tab-item>
                     <v-tab-item key="2" value="subject-tabs-2">
                         Previous Versions
@@ -48,13 +50,16 @@ export default class Subject extends Vue {
     public tabs: string = "subject-tabs-1";
 
     public mounted(): void {
-        this.$store.dispatch('subjectSchemaLatest', this.$route.params.name);
-        // this.$store.dispatch('subjectSchemaVersions', this.$route.params.name);
+        this.$store.dispatch('subjectSchemaVersion', this.$route.params.name);
     }
 
-    public get latestSchema(): SchemaDetail | null {
-        if (this.$store.state.subjects.latestSchema) {
-            return this.$store.state.subjects.latestSchema.attributes;
+    public get loading(): boolean {
+        return this.$store.state.subjects.schema.loading.indexOf("latest") !== -1;
+    }
+
+    public get schema(): SchemaDetail | null {
+        if (this.$store.state.subjects.schema.versions.hasOwnProperty("latest")) {
+            return this.$store.state.subjects.schema.versions["latest"];
         } else {
             return null;
         }
