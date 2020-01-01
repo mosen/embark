@@ -1,4 +1,4 @@
-package main.java.com.github.mosen.micronaut.security.saml.routes;
+package com.github.mosen.security.saml2.routes;
 
 import com.onelogin.saml2.Auth;
 import io.micronaut.context.annotation.Executable;

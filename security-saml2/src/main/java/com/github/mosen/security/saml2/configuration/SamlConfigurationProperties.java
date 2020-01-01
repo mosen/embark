@@ -1,4 +1,4 @@
-package main.java.com.github.mosen.micronaut.security.saml.configuration;
+package com.github.mosen.security.saml2.configuration;
 
 import io.micronaut.context.annotation.ConfigurationProperties;
 import io.micronaut.context.annotation.Requires;

@@ -1,0 +1,40 @@
+plugins {
+    id "java"
+//    id 'org.hidetake.swagger.generator' version '2.18.1'
+    id "io.spring.dependency-management" version "1.0.6.RELEASE"
+//    id "net.ltgt.apt-eclipse" version "0.21"
+//    id "net.ltgt.apt-idea" version "0.21"
+//    id "com.github.johnrengelman.shadow" version "4.0.2"
+}
+
+group "com.github.mosen"
+
+repositories {
+    mavenCentral()
+    maven { url "https://jcenter.bintray.com" }
+    jcenter()
+}
+
+dependencyManagement {
+    imports {
+        mavenBom 'io.micronaut:micronaut-bom:1.1.4'
+    }
+}
+
+dependencies {
+    annotationProcessor "io.micronaut:micronaut-inject-java"
+    annotationProcessor "io.micronaut:micronaut-security"
+    annotationProcessor "io.micronaut:micronaut-graal"
+    compileOnly "io.micronaut:micronaut-inject-java"
+    compile "io.micronaut:micronaut-security"
+    compile "io.micronaut:micronaut-inject"
+    compile "io.micronaut:micronaut-http-client"
+    compile "com.onelogin:java-saml:2.5.0"
+    compileOnly "io.micronaut:micronaut-session"
+
+    testCompile "io.micronaut:micronaut-http-client"
+    testCompile "io.micronaut:micronaut-http-server-netty"
+    testCompile "io.micronaut:micronaut-inject-groovy"
+    testCompile 'com.sun.activation:javax.activation:1.2.0' // Java 11
+    testCompile "org.testcontainers:testcontainers:1.12.4"
+}

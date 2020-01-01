@@ -8,20 +8,20 @@ node {
     download = true
 }
 
-task start(type: YarnTask, dependsOn: 'yarn') {
-    group = 'application'
-    description = 'Run the app'
-    args = ['run', 'start']
-}
-
-task build(type: YarnTask, dependsOn: 'yarn') {
-    group = 'build'
-    description = 'Build the client bundle'
-    args = ['run', 'build']
-}
-
-task test(type: YarnTask, dependsOn: 'yarn') {
-    group = 'verification'
-    description = 'Run the client tests'
-    args = ['run', 'test']
-}
+//task start(type: YarnTask, dependsOn: 'yarn') {
+//    group = 'application'
+//    description = 'Run the app'
+//    args = ['run', 'start']
+//}
+//
+//task build(type: YarnTask, dependsOn: 'yarn') {
+//    group = 'build'
+//    description = 'Build the client bundle'
+//    args = ['run', 'build']
+//}
+//
+//task test(type: YarnTask, dependsOn: 'yarn') {
+//    group = 'verification'
+//    description = 'Run the client tests'
+//    args = ['run', 'test']
+//}

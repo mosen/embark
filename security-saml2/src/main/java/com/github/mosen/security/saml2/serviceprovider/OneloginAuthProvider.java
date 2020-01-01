@@ -1,4 +1,4 @@
-package main.java.com.github.mosen.micronaut.security.saml.serviceprovider;
+package com.github.mosen.security.saml2.serviceprovider;
 
 import com.onelogin.saml2.Auth;
 import com.onelogin.saml2.exception.Error;
@@ -14,7 +14,6 @@ import javax.inject.Singleton;
 import java.io.IOException;
 
 @Factory
-@Requires(classes=com.onelogin.saml2.Auth.class)
 public class OneloginAuthProvider {
 
   private static final Logger LOG = LoggerFactory.getLogger(OneloginAuthProvider.class);
@@ -27,7 +26,7 @@ public class OneloginAuthProvider {
   }
 
   @Singleton
-  Auth auth(Saml2Settings settings) throws SettingsException, IOException, Error {
+  Auth auth() throws SettingsException, IOException, Error {
       return new Auth();
   }
 

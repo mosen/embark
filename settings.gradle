@@ -1,6 +1,5 @@
 rootProject.name = 'embark'
+
+include 'security-saml2'
 include 'admin'
-include 'connect'
-include 'schemaregistry'
-include 'ksql'
 include 'frontend'

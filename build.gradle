@@ -3,10 +3,12 @@
 buildscript {
 }
 
-subprojects { project ->
-
-    if(!project.path.contains(':frontend')) {
-
-
-    }
+subprojects {
+    apply plugin: 'java'
 }
+//
+//project(":admin") {
+//    dependencies {
+//        build(project(":security-saml2"))
+//    }
+//}

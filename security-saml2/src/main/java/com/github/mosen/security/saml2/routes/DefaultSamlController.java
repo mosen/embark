@@ -1,4 +1,4 @@
-package main.java.com.github.mosen.micronaut.security.saml.routes;
+package com.github.mosen.security.saml2.routes;
 
 import com.onelogin.saml2.Auth;
 import com.onelogin.saml2.settings.Saml2Settings;
@@ -6,9 +6,10 @@ import io.micronaut.context.annotation.Parameter;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.annotation.Controller;
+import io.micronaut.http.annotation.Get;
+import io.micronaut.http.annotation.Post;
 import io.micronaut.security.annotation.Secured;
 import io.micronaut.security.rules.SecurityRule;
-import org.reactivestreams.Publisher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,7 +23,7 @@ public class DefaultSamlController implements SamlController {
 
   private final Auth auth;
 
-  DefaultSamlController(@Parameter Auth auth) {
+  DefaultSamlController(Auth auth) {
     LOG.info("DefaultSamlController()");
     this.auth = auth;
   }
@@ -33,7 +34,7 @@ public class DefaultSamlController implements SamlController {
     return this.auth;
   }
 
-  @Override
+  @Get("/login")
   public HttpResponse login(HttpRequest request) {
     try {
       auth.login();
@@ -43,7 +44,7 @@ public class DefaultSamlController implements SamlController {
     }
   }
 
-  @Override
+  @Post("/acs")
   public HttpResponse assertionConsumerService(HttpRequest<Map<String, Object>> request) {
 
 //    HttpResponse response;
@@ -60,7 +61,7 @@ public class DefaultSamlController implements SamlController {
     return HttpResponse.ok();
   }
 
-  @Override
+  @Get("/metadata")
   public HttpResponse<String> metadata() {
     final Saml2Settings settings = this.auth.getSettings();
 

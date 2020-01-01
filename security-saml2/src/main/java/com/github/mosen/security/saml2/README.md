@@ -1,4 +1,4 @@
-# micronaut-security-saml #
+# micronaut-security-saml2 #
 
 This structure is copied from micronaut-oauth2 because I did not know how to make a security provider for micronaut
 
