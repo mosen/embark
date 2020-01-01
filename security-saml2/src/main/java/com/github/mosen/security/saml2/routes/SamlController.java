@@ -4,6 +4,7 @@ import com.onelogin.saml2.Auth;
 import io.micronaut.context.annotation.Executable;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.HttpResponse;
+import io.micronaut.http.annotation.Body;
 import io.micronaut.security.annotation.Secured;
 import io.micronaut.security.rules.SecurityRule;
 import org.reactivestreams.Publisher;
@@ -39,7 +40,7 @@ public interface SamlController {
    * @return A response
    */
   @Executable
-  HttpResponse assertionConsumerService(HttpRequest<Map<String, Object>> request);
+  HttpResponse assertionConsumerService(@Body String samlResponseParameter);
 
 
   HttpResponse<String> metadata();

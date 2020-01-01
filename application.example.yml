@@ -25,19 +25,25 @@ kafka:
   #  security:
   #    protocol: ssl
 
-## Connect Service
-#  ---------------
-#kafka:
-  connect:
-    url: http://localhost:8083/
+## SAML2 Micronaut Security Spec (Testing Only)
+## --------------------------------
+#
+micronaut:
+  security:
+    enabled: true
+    saml2:
+      enabled: true
+#      contacts:
+#
+      services:
+        microsoft:
+          idp:
+            entityid: "<AAD Tenant Endpoint EntityID>"
+            sso-url: "<AAD Tenant SSO URL>"
+            slo-url: "<AAD Tenant SLO URL>"
+            certificate: "<Base64 Encoded DER Cert>"
 
-## Schema Registry Service
-#  -----------------------
-  #kafka:
-  registry:
-    url: http://localhost:8081/
-
-## KSQL Service
-#  ------------
-  ksql:
-    url: http://localhost:8082/
+          sp:
+            entityid: "<AAD App Registration Client ID>"
+            assertion-consumer-path: /saml2/acs/microsoft
+            nameid-format: "urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress"
