@@ -17,11 +17,9 @@ that either proxy or act as an interface to API's
 and that are built with the [micronaut framework](https://micronaut.io/):
 
 - **admin**, which handles AdminClient API functionality.
-- **connect**, which will act as middleware for the Connect REST API to
-  enforce RBAC and namespacing.
-- **schemaregistry**, which will act as middleware for the Schema Registry
-  API to enforce RBAC and namespacing.
-- **ksql**, which will act as middleware for the KSQL server.
+
+(connect, schemaregistry and KSQL are going direct to their respective APIs at the
+moment with CORS).
 
 It also comes with a [frontend](frontend), built with Vue.js.
 
