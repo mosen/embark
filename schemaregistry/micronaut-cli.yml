@@ -1,5 +1,0 @@
-profile: service
-defaultPackage: embark.api.schemaregistry
----
-testFramework: junit
-sourceLanguage: java

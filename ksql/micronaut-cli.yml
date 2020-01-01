@@ -1,5 +1,0 @@
-profile: service
-defaultPackage: embark.api.ksql
----
-testFramework: junit
-sourceLanguage: java
