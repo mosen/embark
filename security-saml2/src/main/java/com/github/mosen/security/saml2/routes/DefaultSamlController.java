@@ -7,15 +7,20 @@ import com.onelogin.saml2.exception.Error;
 import com.onelogin.saml2.servlet.ServletUtils;
 import com.onelogin.saml2.settings.Saml2Settings;
 import io.micronaut.context.annotation.Parameter;
+import io.micronaut.context.event.ApplicationEventPublisher;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.*;
 import io.micronaut.http.uri.UriBuilder;
 import io.micronaut.security.annotation.Secured;
+import io.micronaut.security.handlers.LoginHandler;
+import io.micronaut.security.handlers.RedirectingLoginHandler;
 import io.micronaut.security.rules.SecurityRule;
+import io.reactivex.Flowable;
 import org.joda.time.DateTime;
 import org.joda.time.Instant;
+import org.reactivestreams.Publisher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,12 +37,21 @@ public class DefaultSamlController implements SamlController {
   private static final Logger LOG = LoggerFactory.getLogger(DefaultSamlController.class);
 
   private final Auth auth;
+  private final LoginHandler loginHandler;
+  private final ApplicationEventPublisher eventPublisher;
 
-  DefaultSamlController(Auth auth) {
-    LOG.info("DefaultSamlController()");
+  /**
+   * @param auth The OneLogin java-saml toolkit Auth instance.
+   * @param loginHandler The login handler
+   * @param eventPublisher The event publisher
+   */
+  DefaultSamlController(Auth auth,
+                        RedirectingLoginHandler loginHandler,
+                        ApplicationEventPublisher eventPublisher) {
     this.auth = auth;
+    this.loginHandler = loginHandler;
+    this.eventPublisher = eventPublisher;
   }
-
 
   @Override
   public Auth getAuth() {
@@ -45,7 +59,8 @@ public class DefaultSamlController implements SamlController {
   }
 
   @Get("/login")
-  public HttpResponse login(HttpRequest request) {
+  public Publisher<HttpResponse> login(HttpRequest request) {
+
     Map<String, String> parameters = new HashMap<String, String>();
     Saml2Settings settings = this.auth.getSettings();
     AuthnRequest authnRequest = new AuthnRequest(settings, false, false, true);
@@ -96,7 +111,11 @@ public class DefaultSamlController implements SamlController {
 
   @Post("/acs")
   @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-  public HttpResponse assertionConsumerService(@Body String SAMLResponse) {
+  public Publisher<HttpResponse> assertionConsumerService(@Body String SAMLResponse) {
+    if (LOG.isTraceEnabled()) {
+      LOG.trace("Received assertion from saml2 provider [{}]", "idpname");
+    }
+
     Boolean authenticated = false;
 //    final com.onelogin.saml2.http.HttpRequest httpRequest = new com.onelogin.saml2.http.HttpRequest();
 
@@ -149,14 +168,14 @@ public class DefaultSamlController implements SamlController {
 
   @Get("/metadata")
   @Produces("text/xml")
-  public HttpResponse<String> metadata() {
+  public Publisher<HttpResponse> metadata() {
     final Saml2Settings settings = this.auth.getSettings();
 
     try {
       String metadata = settings.getSPMetadata();
-      return HttpResponse.ok(metadata);
+      return Flowable.just(HttpResponse.ok(metadata));
     } catch (Exception e) {
-      return HttpResponse.serverError(e.getMessage());
+      return Flowable.just(HttpResponse.serverError(e.getMessage()));
     }
   }
 }

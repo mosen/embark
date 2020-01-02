@@ -21,7 +21,7 @@ repositories {
 
 dependencyManagement {
     imports {
-        mavenBom 'io.micronaut:micronaut-bom:1.1.4'
+        mavenBom 'io.micronaut:micronaut-bom:1.2.7'
     }
 }
 
@@ -44,10 +44,10 @@ dependencies {
     compile "io.micronaut:micronaut-http-server-netty"
     compile "io.swagger.core.v3:swagger-annotations"
     compile "io.micronaut:micronaut-security"
-    compile "io.micronaut:micronaut-security-jwt"
+    implementation "io.micronaut:micronaut-security-jwt"
     compile 'io.micronaut.configuration:micronaut-kafka'
     compile "com.onelogin:java-saml:2.5.0"
-    compile project(":security-saml2")
+    implementation project(":security-saml2")
     implementation 'org.apache.kafka:kafka-clients:2.3.0'
     implementation "io.reactivex.rxjava2:rxjava:2.2.10"
     runtime "ch.qos.logback:logback-classic:1.2.3"

@@ -9,8 +9,6 @@ import io.micronaut.security.annotation.Secured;
 import io.micronaut.security.rules.SecurityRule;
 import org.reactivestreams.Publisher;
 
-import java.util.Map;
-
 /**
  * Responsible for SAML SP authorization redirect and assertion consumer service.
  *
@@ -20,7 +18,7 @@ import java.util.Map;
 public interface SamlController {
 
   /**
-   * @return The OneLogin SAML Instance associated with this controller.
+   * @return The OneLogin SAML Auth instance associated with this controller.
    */
   Auth getAuth();
 
@@ -31,17 +29,21 @@ public interface SamlController {
    * @return A redirecting http response
    */
   @Executable
-  HttpResponse login(HttpRequest request);
+  Publisher<HttpResponse> login(HttpRequest request);
 
   /**
    * Receive the SAML IdP Assertion (POST binding)
    *
-   * @param request The current request
+   * @param SAMLResponse The SAML Response POST'ed back as form encoded data.
    * @return A response
    */
   @Executable
-  HttpResponse assertionConsumerService(@Body String samlResponseParameter);
+  Publisher<HttpResponse> assertionConsumerService(@Body String SAMLResponse);
 
-
-  HttpResponse<String> metadata();
+  /**
+   * Generate SAML SP Metadata
+   *
+   * @return A response
+   */
+  Publisher<HttpResponse> metadata();
 }
