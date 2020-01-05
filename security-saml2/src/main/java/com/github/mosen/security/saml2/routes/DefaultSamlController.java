@@ -61,13 +61,10 @@ public class DefaultSamlController implements SamlController {
     return this.saml;
   }
 
-  @Get("/login")
   public Publisher<HttpResponse> login(HttpRequest request) {
     return this.saml.authorizationRedirect(request);
   }
 
-  @Post("/acs")
-  @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
   public Publisher<HttpResponse> assertionConsumerService(@Body String SAMLResponse) {
     if (LOG.isTraceEnabled()) {
       LOG.trace("Received callback from saml2 provider [{}]", saml.getName());
@@ -95,7 +92,6 @@ public class DefaultSamlController implements SamlController {
     return Flowable.just(HttpResponse.status(HttpStatus.UNAUTHORIZED));
   }
 
-  @Get("/metadata")
   @Produces("text/xml")
   public Publisher<HttpResponse> metadata() {
     final Saml2Settings settings = this.saml.getSettings();

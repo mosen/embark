@@ -45,6 +45,7 @@ public class DefaultSaml2RouteUrlBuilder implements Saml2RouteUrlBuilder {
   private final HttpHostResolver hostResolver;
   private final String authnRequestUriTemplate = "/saml/login{/idp}";
   private final String acsUriTemplate = "/saml/acs{/idp}";
+  private final String metadataUriTemplate = "/saml/metadata{/idp}";
 
   DefaultSaml2RouteUrlBuilder(HttpHostResolver hostResolver) {
     this.hostResolver = hostResolver;
@@ -75,6 +76,15 @@ public class DefaultSaml2RouteUrlBuilder implements Saml2RouteUrlBuilder {
       return new URI(getPath(acsUriTemplate, idpName));
     } catch (URISyntaxException e) {
       throw new RoutingException("Error building a URI for the path [" + acsUriTemplate + "]", e);
+    }
+  }
+
+  @Override
+  public URI buildServiceProviderMetadataUri(@Nullable String idpName) {
+    try {
+      return new URI(getPath(metadataUriTemplate, idpName));
+    } catch (URISyntaxException e) {
+      throw new RoutingException("Error building a URI for the path [" + metadataUriTemplate + "]", e);
     }
   }
 

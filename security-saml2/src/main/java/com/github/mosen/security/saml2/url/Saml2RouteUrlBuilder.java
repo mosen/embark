@@ -26,4 +26,6 @@ public interface Saml2RouteUrlBuilder extends AbsoluteUrlBuilder {
   URI buildAuthnRequestUri(@Nullable String idpName);
 
   URI buildAssertionConsumerServiceUri(@Nullable String idpName);
+
+  URI buildServiceProviderMetadataUri(@Nullable String idpName);
 }

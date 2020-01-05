@@ -67,7 +67,7 @@ public class Saml2RouteBuilder extends DefaultRouteBuilder {
 
     if (controllerList.isEmpty()) {
       if (LOG.isDebugEnabled()) {
-        LOG.debug("No Oauth controllers found. Skipping registration of routes");
+        LOG.info("No SAML controllers found. Skipping registration of routes");
       }
     } else {
       AtomicBoolean endSessionRegistered = new AtomicBoolean();
@@ -76,46 +76,63 @@ public class Saml2RouteBuilder extends DefaultRouteBuilder {
         SAML2ServiceProvider sp = controller.getServiceProvider();
         String name = sp.getName();
 
-//        boolean isDefaultProvider = oauthConfiguration.getDefaultProvider().filter(provider -> provider.equals(name)).isPresent();
+        // No support for multiple IdP's... yet.
         boolean isDefaultProvider = true;
 
         BeanDefinition<SamlController> bd = beanContext.getBeanDefinition(SamlController.class, Qualifiers.byName(name));
 
-//        bd.findMethod("login", HttpRequest.class).ifPresent(m -> {
-//          String loginPath = saml2RouteUrlBuilder.buildLoginUri(name).getPath();
-//          if (LOG.isDebugEnabled()) {
-//            LOG.debug("Registering login route [GET: {}] for saml2 configuration [{}]", loginPath, name);
-//          }
-//          buildRoute(HttpMethod.GET, loginPath, ExecutionHandle.of(controller, m));
-//          if (isDefaultProvider) {
-//            final String defaultLoginPath = saml2RouteUrlBuilder.buildLoginUri(null).getPath();
-//            if (LOG.isDebugEnabled()) {
-//              LOG.debug("Registering default login route [GET: {}] for saml2 configuration [{}]", defaultLoginPath, name);
-//            }
-//            buildRoute(HttpMethod.GET, defaultLoginPath, ExecutionHandle.of(controller, m));
-//          }
-//        });
+        bd.findMethod("login", HttpRequest.class).ifPresent(m -> {
+          String loginPath = saml2RouteUrlBuilder.buildAuthnRequestUri(name).getPath();
+          if (LOG.isDebugEnabled()) {
+            LOG.debug("Registering login route [GET: {}] for saml2 configuration [{}]", loginPath, name);
+          }
+          buildRoute(HttpMethod.GET, loginPath, ExecutionHandle.of(controller, m));
+          if (isDefaultProvider) {
+            final String defaultLoginPath = saml2RouteUrlBuilder.buildAuthnRequestUri(null).getPath();
+            if (LOG.isDebugEnabled()) {
+              LOG.debug("Registering default login route [GET: {}] for saml2 configuration [{}]", defaultLoginPath, name);
+            }
+            buildRoute(HttpMethod.GET, defaultLoginPath, ExecutionHandle.of(controller, m));
+          }
+        });
 
-//        bd.findMethod("assertionConsumerService", HttpRequest.class).ifPresent(m -> {
-//          String callbackPath = saml2RouteUrlBuilder.buildAssertionConsumerServiceUri(name).getPath();
-//          MethodExecutionHandle<SamlController, Object> executionHandle = ExecutionHandle.of(controller, m);
-//          if (LOG.isDebugEnabled()) {
-//            LOG.debug("Registering assertion consumer service route [GET: {}] for saml2 configuration [{}]", callbackPath, name);
-//            LOG.debug("Registering assertion consumer service route [POST: {}] for saml2 configuration [{}]", callbackPath, name);
-//          }
-//          buildRoute(HttpMethod.GET, callbackPath, executionHandle);
-//          buildRoute(HttpMethod.POST, callbackPath, executionHandle).consumes(MediaType.APPLICATION_FORM_URLENCODED_TYPE);
-//
-//          if (isDefaultProvider) {
-//            final String defaultCallbackPath = saml2RouteUrlBuilder.buildAssertionConsumerServiceUri(null).getPath();
-//            if (LOG.isDebugEnabled()) {
-//              LOG.debug("Registering default assertion consumer service route [GET: {}] for saml2 configuration [{}]", defaultCallbackPath, name);
-//              LOG.debug("Registering default assertion consumer service route [POST: {}] for saml2 configuration [{}]", defaultCallbackPath, name);
-//            }
-//            buildRoute(HttpMethod.GET, defaultCallbackPath, executionHandle);
-//            buildRoute(HttpMethod.POST, defaultCallbackPath, executionHandle).consumes(MediaType.APPLICATION_FORM_URLENCODED_TYPE);
-//          }
-//        });
+        bd.findMethod("assertionConsumerService", String.class).ifPresent(m -> {
+          String callbackPath = saml2RouteUrlBuilder.buildAssertionConsumerServiceUri(name).getPath();
+          MethodExecutionHandle<SamlController, Object> executionHandle = ExecutionHandle.of(controller, m);
+          if (LOG.isDebugEnabled()) {
+            LOG.debug("Registering assertion consumer service route [GET: {}] for saml2 configuration [{}]", callbackPath, name);
+            LOG.debug("Registering assertion consumer service route [POST: {}] for saml2 configuration [{}]", callbackPath, name);
+          }
+          buildRoute(HttpMethod.GET, callbackPath, executionHandle);
+          buildRoute(HttpMethod.POST, callbackPath, executionHandle).consumes(MediaType.APPLICATION_FORM_URLENCODED_TYPE);
+
+          if (isDefaultProvider) {
+            final String defaultCallbackPath = saml2RouteUrlBuilder.buildAssertionConsumerServiceUri(null).getPath();
+            if (LOG.isDebugEnabled()) {
+              LOG.debug("Registering default assertion consumer service route [GET: {}] for saml2 configuration [{}]", defaultCallbackPath, name);
+              LOG.debug("Registering default assertion consumer service route [POST: {}] for saml2 configuration [{}]", defaultCallbackPath, name);
+            }
+            buildRoute(HttpMethod.GET, defaultCallbackPath, executionHandle);
+            buildRoute(HttpMethod.POST, defaultCallbackPath, executionHandle).consumes(MediaType.APPLICATION_FORM_URLENCODED_TYPE);
+          }
+        });
+
+        bd.findMethod("metadata").ifPresent(m -> {
+          String spMetadataPath = saml2RouteUrlBuilder.buildServiceProviderMetadataUri(name).getPath();
+          MethodExecutionHandle<SamlController, Object> executionHandle = ExecutionHandle.of(controller, m);
+          if (LOG.isDebugEnabled()) {
+            LOG.debug("Registering service provider metadata route [GET: {}] for saml2 configuration [{}]", spMetadataPath, name);
+          }
+          buildRoute(HttpMethod.GET, spMetadataPath, executionHandle).produces(MediaType.TEXT_XML_TYPE);
+
+          if (isDefaultProvider) {
+            final String defaultCallbackPath = saml2RouteUrlBuilder.buildServiceProviderMetadataUri(null).getPath();
+            if (LOG.isDebugEnabled()) {
+              LOG.debug("Registering default service provider metadata route [GET: {}] for saml2 configuration [{}]", defaultCallbackPath, name);
+            }
+            buildRoute(HttpMethod.GET, defaultCallbackPath, executionHandle).produces(MediaType.TEXT_XML_TYPE);
+          }
+        });
       });
 
       if (!endSessionRegistered.get() && LOG.isDebugEnabled()) {
