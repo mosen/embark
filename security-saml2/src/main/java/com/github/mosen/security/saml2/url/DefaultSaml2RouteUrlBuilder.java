@@ -3,9 +3,11 @@ package com.github.mosen.security.saml2.url;
 import io.micronaut.http.HttpRequest;
 
 import javax.annotation.Nullable;
+import javax.inject.Singleton;
 import java.net.URI;
 import java.net.URL;
 
+@Singleton
 public class DefaultSaml2RouteUrlBuilder implements Saml2RouteUrlBuilder {
 
   @Override

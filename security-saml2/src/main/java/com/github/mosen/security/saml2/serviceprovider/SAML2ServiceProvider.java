@@ -1,5 +1,6 @@
 package com.github.mosen.security.saml2.serviceprovider;
 
+import com.onelogin.saml2.settings.Saml2Settings;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.security.authentication.AuthenticationResponse;
@@ -18,6 +19,11 @@ public interface SAML2ServiceProvider {
   String getName();
 
   /**
+   * @return Current SAML2 settings
+   */
+  Saml2Settings getSettings();
+
+  /**
    * Authenticate with IdP using SAML Redirect binding
    *
    * @param originating The originating request
@@ -29,8 +35,8 @@ public interface SAML2ServiceProvider {
    * Responsible for receiving the authorization callback request and returning
    * an authentication response.
    *
-   * @param request The callback request
+   * @param SAMLResponse The callback request
    * @return The authentication response
    */
-  Publisher<AuthenticationResponse> onCallback(HttpRequest<Map<String, Object>> request);
+  Publisher<AuthenticationResponse> onCallback(String SAMLResponse);
 }

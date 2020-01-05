@@ -1,6 +1,6 @@
 package com.github.mosen.security.saml2.routes;
 
-import com.onelogin.saml2.Auth;
+import com.github.mosen.security.saml2.serviceprovider.SAML2ServiceProvider;
 import io.micronaut.context.annotation.Executable;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.HttpResponse;
@@ -8,6 +8,8 @@ import io.micronaut.http.annotation.Body;
 import io.micronaut.security.annotation.Secured;
 import io.micronaut.security.rules.SecurityRule;
 import org.reactivestreams.Publisher;
+
+import java.util.Map;
 
 /**
  * Responsible for SAML SP authorization redirect and assertion consumer service.
@@ -20,7 +22,7 @@ public interface SamlController {
   /**
    * @return The OneLogin SAML Auth instance associated with this controller.
    */
-  Auth getAuth();
+  SAML2ServiceProvider getServiceProvider();
 
   /**
    * Performs an authorization redirect to SAML IdP using SAML URI/GET redirect binding
@@ -34,11 +36,11 @@ public interface SamlController {
   /**
    * Receive the SAML IdP Assertion (POST binding)
    *
-   * @param SAMLResponse The SAML Response POST'ed back as form encoded data.
+   * @param request The HTTP-POST bound SAML Assertion
    * @return A response
    */
   @Executable
-  Publisher<HttpResponse> assertionConsumerService(@Body String SAMLResponse);
+  public Publisher<HttpResponse> assertionConsumerService(String SAMLResponse);
 
   /**
    * Generate SAML SP Metadata
