@@ -1,0 +1,8 @@
+version: '3'
+services:
+  connect-proxy:
+    image: devopsfaith/krakend
+    volumes:
+      - "./krakend.json:/etc/krakend/krakend.json:ro"
+    ports:
+      - "9083:9083"

@@ -62,6 +62,11 @@ public class DefaultSaml2RouteUrlBuilder implements Saml2RouteUrlBuilder {
   }
 
   @Override
+  public URL buildServiceProviderMetadataUrl(@Nullable HttpRequest originating, String idpName) {
+    return build(originating, idpName, metadataUriTemplate);
+  }
+
+  @Override
   public URI buildAuthnRequestUri(@Nullable String idpName) {
     try {
       return new URI(getPath(authnRequestUriTemplate, idpName));
