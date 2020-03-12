@@ -4,6 +4,11 @@
 api:
   base-path: "/api"
 
+embark:
+  features_enabled:
+    topics: no
+    connect: no
+    ksql: no
 
 ## Admin Service
 #  -------------

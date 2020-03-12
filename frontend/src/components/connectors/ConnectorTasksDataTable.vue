@@ -33,7 +33,7 @@ export default class ConnectorTasksDataTable extends Vue {
     public readonly data?: { task: string; connector: string }[];
 
     @Prop()
-    public search: string = "";
+    public search = "";
 
     @Prop(Boolean)
     public loading!: boolean;

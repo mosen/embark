@@ -31,7 +31,7 @@ export default class App extends Vue {
     }
 
     public set snackbarVisible(value: boolean) {
-
+        this.$store.state.snackbar.open = value;
     }
 
     public get snackbarText(): string {

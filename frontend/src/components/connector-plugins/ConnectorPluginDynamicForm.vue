@@ -18,10 +18,10 @@
             <v-row>
                 <v-subheader>Connector Configuration</v-subheader>
             <v-expansion-panels>
-                <v-expansion-panel v-for="(validationItems, group) in definitionsByGroup">
+                <v-expansion-panel v-for="(validationItems, group) in definitionsByGroup" :key="group">
                     <v-expansion-panel-header>{{ group }}</v-expansion-panel-header>
                     <v-expansion-panel-content>
-                        <ConfigField v-bind="vi.definition" v-for="vi in validationItems">
+                        <ConfigField v-bind="vi.definition" v-for="vi in validationItems" :key="vi.definition.name">
                         </ConfigField>
                     </v-expansion-panel-content>
                 </v-expansion-panel>
@@ -33,8 +33,8 @@
 
 
 <script lang="ts">
-import {Component, Emit, Prop, Vue} from "vue-property-decorator";
-import {ConfigDefinition, ConnectorPluginValidationItem} from "@/store/connector_plugins/types";
+import {Component, Prop, Vue} from "vue-property-decorator";
+import {ConnectorPluginValidationItem} from "@/store/connector_plugins/types";
 import ConfigField from "@/components/connector-plugins/ConfigField.vue";
 
 @Component({
@@ -63,7 +63,7 @@ export default class ConnectorPluginDynamicForm extends Vue {
             return this.$store.state.connectorPlugins.validation.configs.reduce((memo: { [groupName: string]: ConnectorPluginValidationItem[] }, item: ConnectorPluginValidationItem) => {
                 if (this.omitProps.indexOf(item.definition.name) !== -1) { return memo; }
 
-                let groupName = item.definition.group != 'null' ? item.definition.group : 'Other';
+                const groupName = item.definition.group != 'null' ? item.definition.group : 'Other';
 
                 if (!memo[groupName]) {
                     memo[groupName] = [];

@@ -33,7 +33,7 @@ export default class ConsumerGroupsDataTable extends Vue {
     private readonly data!: ConsumerGroup[];
 
     @Prop()
-    public search: string = "";
+    public search = "";
 
     @Prop(Boolean)
     public loading!: boolean;

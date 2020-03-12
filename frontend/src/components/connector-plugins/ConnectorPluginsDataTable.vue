@@ -32,7 +32,7 @@ export default class ConnectorPluginsDataTable extends Vue {
     public readonly data?: ConnectorPlugin[];
 
     @Prop()
-    public search: string = "";
+    public search = "";
 
     @Prop(Boolean)
     public loading!: boolean;

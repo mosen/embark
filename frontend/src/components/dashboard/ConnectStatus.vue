@@ -66,6 +66,7 @@ export default class ConnectStatus extends Vue {
     }
 
     public get kafka_cluster_id(): string {
+        /* eslint-disable camelcase */
         return this.$store.state.connect.kafka_cluster_id || "";
     }
 
@@ -73,7 +74,7 @@ export default class ConnectStatus extends Vue {
         return this.$store.state.connect.error;
     }
 
-    public created() {
+    public created(): void {
         this.$store.dispatch('fetchConnectInfo');
     }
 }
