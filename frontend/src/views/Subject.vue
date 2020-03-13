@@ -1,37 +1,31 @@
 <template>
     <v-container>
-        <v-layout>
-            <v-flex xs12>
-
+        <v-row>
+            <v-col xs12>
+                <h4>Subject</h4>
                 <h1 class="display-1">{{ $route.params.name }}</h1>
-
-            </v-flex>
-        </v-layout>
-        <v-layout>
-            <v-flex xs12>
-                <v-tabs v-model="tabs">
-                    <v-tab href="#subject-tabs-1">Latest</v-tab>
-                    <v-tab href="#subject-tabs-2">Versions</v-tab>
-                </v-tabs>
-
-                <v-tabs-items v-model="tabs">
-                    <v-tab-item key="1" value="subject-tabs-1">
-                        <Schema v-if="!loading && schema"
-                                :id="schema.id"
-                                :subject="schema.subject"
-                                :schema="JSON.parse(schema.schema)"
-                                :version="schema.version"
-                        />
-                        <v-alert v-if="loading">
-                            Loading
-                        </v-alert>
-                    </v-tab-item>
-                    <v-tab-item key="2" value="subject-tabs-2">
-                        Previous Versions
-                    </v-tab-item>
-                </v-tabs-items>
-            </v-flex>
-        </v-layout>
+            </v-col>
+        </v-row>
+        <v-row>
+            <v-col cols="2">
+                <VersionBrowser
+                        :url-prefix="'/subject/' + name + '/versions/'"
+                        :versions="versions"
+                        :selected="selected"
+                />
+            </v-col>
+            <v-col>
+                <v-alert v-if="loading || schema === null">
+                    Loading
+                </v-alert>
+                <Schema v-else
+                        :id="schema.id"
+                        :subject="schema.subject"
+                        :schema="JSON.parse(schema.schema)"
+                        :version="schema.version"
+                />
+            </v-col>
+        </v-row>
 
     </v-container>
 </template>
@@ -40,29 +34,49 @@
 import {Component, Vue} from 'vue-property-decorator';
 import {SchemaDetail} from '@/store/subjects/types';
 import Schema from "@/components/subjects/Schema.vue";
+import VersionBrowser from "@/components/subjects/VersionBrowser.vue";
 
 
 @Component({
-    components: {Schema}
+    components: {VersionBrowser, Schema}
 })
 export default class Subject extends Vue {
 
-    public tabs: string = "subject-tabs-1";
+    public tabs = "subject-tabs-1";
 
     public mounted(): void {
-        this.$store.dispatch('subjectSchemaVersion', this.$route.params.name);
+        this.$store.dispatch('subjectSchemaVersion', { subject: this.$route.params.name, version: this.$route.params.version });
+        this.$store.dispatch('schemaVersions', this.$route.params.name);
+    }
+
+    public get name(): string {
+        return this.$route.params.name;
     }
 
     public get loading(): boolean {
-        return this.$store.state.subjects.schema.loading.indexOf("latest") !== -1;
+        return this.$store.state.subjects.schema.loading;
     }
 
     public get schema(): SchemaDetail | null {
-        if (this.$store.state.subjects.schema.versions.hasOwnProperty("latest")) {
-            return this.$store.state.subjects.schema.versions["latest"];
+        if (Object.prototype.hasOwnProperty.call(this.$store.state.subjects.schema.versions, this.$route.params.version)) {
+            return this.$store.state.subjects.schema.versions[this.$route.params.version];
         } else {
             return null;
         }
+
+        // if (Object.prototype.hasOwnProperty.call(this.$store.state.subjects.schema.versions, this.$route.params.version)) {
+        //     return this.$store.state.subjects.schema.versions[this.$route.params.version];
+        // } else {
+        //     return null;
+        // }
+    }
+
+    public get selected(): string {
+        return this.$route.params.version;
+    }
+
+    public get versions(): number[] | null {
+        return this.$store.state.subjects.schema.versionCount;
     }
 }
 </script>

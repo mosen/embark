@@ -37,13 +37,14 @@ public class TopicsController {
     this.adminClient = adminClient;
   }
 
-  @Get(uri = "/{?includeInternal}")
+  @Get(uri = "/{?includeInternal,includeUnderscore}")
   @Version("1")
   @Operation(summary = "Get a list of topics", description = "Gets a list of topics from the Kafka broker(s)")
   @ApiResponse(responseCode = "502", description = "Unable to connect to Kafka broker(s) or connection was disconnected")
   @Tag(name = "topics")
   public Single<Collection<TopicListing>> listTopics(
-          @Parameter(description="Whether to include internal topics") @QueryValue @Nullable Boolean includeInternal
+          @Parameter(description="Whether to include internal topics") @QueryValue @Nullable Boolean includeInternal,
+          @Parameter(description="Whether to include underscore prefixed topics usually reserved for Confluent products") @QueryValue @Nullable Boolean includeUnderscore
   ) {
     ListTopicsOptions options = new ListTopicsOptions();
 
@@ -55,7 +56,11 @@ public class TopicsController {
             .listTopics(options)
             .listings();
 
-    return Single.fromFuture(kafkaFuture).map(ArrayList::new);
+    if (includeUnderscore != null && includeUnderscore) {
+      return Single.fromFuture(kafkaFuture).map(ArrayList::new);
+    } else {
+      return Single.fromFuture(kafkaFuture).map(ArrayList::new);
+    }
   }
 
   @Get(uri = "/{name}")

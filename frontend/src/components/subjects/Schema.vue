@@ -20,8 +20,8 @@ export default class Schema extends Vue {
     @Prop(Number)
     private readonly id?: number;
 
-    @Prop(String)
-    private readonly schema!: string;
+    @Prop(Object)
+    private readonly schema!: Record<string, any>;
 
     @Prop(Number)
     private readonly version!: number;

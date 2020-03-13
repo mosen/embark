@@ -2,15 +2,17 @@ import {Module} from "vuex";
 import {RootState} from "@/store";
 import * as actions from "./actions";
 import * as mutations from "./mutations";
-import {SchemaDetail, Subject} from "./types";
+import {SchemaDetail} from "./types";
 
 export interface SchemaState {
-    versions: { [versionName: string]: SchemaDetail; };
-    loading: string[];
+    versions: { [versionName: string]: SchemaDetail };
+    versionCount: number[] | null;
+    loading: boolean;
 }
 
 export interface SubjectsState {
     schema: SchemaState;
+    topic: { key: SchemaDetail | null; value: SchemaDetail | null };
     data: string[];
     loading: boolean;
     hasError: boolean;
@@ -21,7 +23,12 @@ export const SubjectsModule: Module<SubjectsState, RootState> = {
     state: {
         schema: {
             versions: {},
-            loading: [],
+            loading: false,
+            versionCount: [],
+        },
+        topic: {
+            key: null,
+            value: null,
         },
         data: [],
         loading: false,

@@ -38,17 +38,16 @@
             </v-row>
         </template>
         <template v-slot:item.name="{ item }">
-            <router-link :to="`/subject/${item.name}`">{{item.name}}</router-link>
+            <router-link :to="`/subject/${item.name}/versions/latest`">{{item.name}}</router-link>
         </template>
     </v-data-table>
 </template>
 
 <script lang="ts">
-import {Component, Prop, Vue, Watch} from 'vue-property-decorator';
+import {Component, Vue, Watch} from 'vue-property-decorator';
 import {TableHeader} from 'vuetify/src/components/VDataTable/mixins/header';
 import {DataTableOptions} from "@/types/vuetify";
-import TopicsActionMenu from "./TopicsActionMenu.vue";
-import NewTopicDialog from "./NewTopicDialog.vue";
+
 
 interface TableRow {
     name: string;
@@ -59,8 +58,8 @@ interface TableRow {
 })
 export default class SubjectsDataTable extends Vue {
 
-    public search: string = "";
-    public perPage: number = 15;
+    public search = "";
+    public perPage = 15;
     public selection: string[] = [];
 
     public get loading(): boolean {
@@ -92,13 +91,13 @@ export default class SubjectsDataTable extends Vue {
 
 
     @Watch("options")
-    public handleOptionsChange(value: DataTableOptions) {
+    public handleOptionsChange(value: DataTableOptions): void {
         this.$store.dispatch('topics', {
             options: value,
         });
     }
 
-    public handleSelectionChange(value: { value: boolean; item: any; }) {
+    public handleSelectionChange(value: { value: boolean; item: { name: string } }): void {
         if (value.value) {
             this.selection.unshift(value.item.name);
         } else {
@@ -106,7 +105,7 @@ export default class SubjectsDataTable extends Vue {
         }
     }
 
-    public handleAllSelectionChange({ value }: { value: boolean; }) {
+    public handleAllSelectionChange({ value }: { value: boolean }): void {
         if (value) {
             this.selection = this.items.map(r => r.name);
         } else {

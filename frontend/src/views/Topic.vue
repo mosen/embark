@@ -71,20 +71,20 @@
 </template>
 
 <script lang="ts">
-import {Component, Prop, Vue} from 'vue-property-decorator';
+import {Component, Vue} from 'vue-property-decorator';
 import {TopicDescription, TopicPartition} from '@/store/topics/types';
 import Partitions from "@/components/topics/Partitions.vue";
 import Configurations from "@/components/topics/Configurations.vue";
 import Permissions from '@/components/topics/Permissions.vue';
-import AclBinding = Kafka.AclBinding;
 import {ConfigEntry} from "@/store/types";
+import {AclBinding} from "@/types/acl";
 
 @Component({
     components: {Partitions, Configurations, Permissions}
 })
 export default class Topic extends Vue {
 
-    public tabs: string = "topic-tabs-1";
+    public tabs = "topic-tabs-1";
 
     public get partitions(): TopicPartition[] {
         if (this.$store.state.topics.current) {
@@ -118,6 +118,7 @@ export default class Topic extends Vue {
         this.$store.dispatch('topic', this.$route.params.name);
         this.$store.dispatch('topicConfiguration', this.$route.params.name);
         this.$store.dispatch('aclBindings', { resourceType: 'TOPIC', resource: this.$route.params.name });
+        this.$store.dispatch('topicSchemas', this.$route.params.name);
     }
 
 }

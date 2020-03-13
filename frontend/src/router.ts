@@ -74,7 +74,7 @@ export default new Router({
                 import(/* webpackChunkName: "subjects" */ './views/Subjects.vue'),
         },
         {
-            path: '/subject/:name/:tab?',
+            path: '/subject/:name/versions/:version',
             name: 'subject',
             component: (): Promise<typeof import('*.vue')> =>
                 import(/* webpackChunkName: "subject" */ './views/Subject.vue'),
