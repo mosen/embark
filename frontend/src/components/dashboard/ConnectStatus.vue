@@ -50,11 +50,11 @@ import { Component, Vue } from 'vue-property-decorator';
 export default class ConnectStatus extends Vue {
 
     public get loading(): boolean {
-        return this.$store.getters.isLoading('connectStatus');
+        return this.$store.state.connect.loading;
     }
 
     public get error(): Error | null {
-        return this.$store.getters.componentError('connectStatus');
+        return this.$store.state.connect.error;
     }
 
     public get url(): string {

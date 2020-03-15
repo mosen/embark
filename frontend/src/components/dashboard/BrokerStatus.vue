@@ -18,12 +18,6 @@
                         </v-list-item-subtitle>
                     </v-list-item-content>
                 </v-list-item>
-<!--                <v-list-item>-->
-<!--                    <v-list-item-content>-->
-<!--                        <v-list-item-title>Cluster ID</v-list-item-title>-->
-<!--                        <v-list-item-subtitle>{{ clusterId }}</v-list-item-subtitle>-->
-<!--                    </v-list-item-content>-->
-<!--                </v-list-item>-->
             </v-list>
         </v-card-text>
     </v-card>
@@ -32,27 +26,20 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 
-@Component({
-    components: {
-    },
-})
+@Component({})
 export default class BrokerStatus extends Vue {
 
     public get loading(): boolean {
-        return this.$store.getters.isLoading('kafkaStatus');
+        return this.$store.state.cluster.loading;
     }
 
     public get error(): Error | null {
-        return this.$store.getters.componentError('kafkaStatus');
+        return this.$store.state.cluster.error;
     }
 
-    public get nodes(): string {
-        return this.$store.state.cluster.nodes || [];
+    public get nodes(): string[] {
+        return this.$store.state.cluster.nodes ?? [];
     }
-
-    // public get clusterId(): string {
-    //     return this.$store.state.cluster.clusterId || "";
-    // }
 
     public created() {
         this.$store.dispatch('kafkaStatus');

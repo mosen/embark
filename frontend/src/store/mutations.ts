@@ -9,6 +9,10 @@ export interface ErrorPayload {
     error: Error | null;
 }
 
+export interface LoadingPayload {
+    loading?: boolean;
+}
+
 // Standard type definition for an exception handling mutation which sets an error on the state tree.
 export type ErrorMutation<S> = (state: S, payload: Error) => void;
 
@@ -27,13 +31,28 @@ export const setSnackbarText: Mutation<RootState> = (state, text: string): void 
     state.snackbar.text = text;
 };
 
+
+export const connectStatusLoading: Mutation<RootState> = (state, payload: LoadingPayload): void => {
+    state.connect.loading = payload.loading ?? true;
+};
+
 export const connectStatus: Mutation<RootState> = (state, payload: VersionResponse): void => {
     state.connect.loading = false;
     state.connect.version = payload.version;
     state.connect.commit = payload.commit;
-    /* eslint camelcase: "off" */
+
     state.connect.kafka_cluster_id = payload.kafka_cluster_id;
     state.connect.url = payload.connectUrl;
+};
+
+export const connectStatusError: Mutation<RootState> = (state, payload: ErrorPayload): void => {
+    state.connect.error = payload.error;
+    state.connect.loading = false;
+};
+
+
+export const schemaRegistryStatusLoading: Mutation<RootState> = (state, payload: LoadingPayload): void => {
+    state.ksql.loading = payload.loading ?? true;
 };
 
 export const schemaRegistryStatus: Mutation<RootState> = (state, payload: CompatibilityLevel): void => {
@@ -41,15 +60,26 @@ export const schemaRegistryStatus: Mutation<RootState> = (state, payload: Compat
     state.registry.compatibility = payload;
 };
 
+export const schemaRegistryStatusError: Mutation<RootState> = (state, payload: ErrorPayload): void => {
+    state.registry.error = payload.error;
+    state.registry.loading = false;
+};
+
+export const kafkaStatusLoading: Mutation<RootState> = (state, payload: LoadingPayload): void => {
+    state.cluster.loading = payload.loading ?? true;
+};
+
 export const kafkaStatus: Mutation<RootState> = (state, payload: ClusterNode[]): void => {
     state.cluster.loading = false;
     state.cluster.nodes = payload.map((d: ClusterNode) => `${d.host}:${d.port}`);
 };
 
+export const kafkaStatusError: Mutation<RootState> = (state, payload: ErrorPayload): void => {
+    state.cluster.error = payload.error;
+    state.cluster.loading = false;
+};
 
-
-export interface KSQLStatusLoadingPayload {
-    loading?: boolean;
+export interface KSQLStatusLoadingPayload extends LoadingPayload {
     url?: string;
 }
 

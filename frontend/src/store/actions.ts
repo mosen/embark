@@ -6,47 +6,42 @@ import {GlobalConfiguration} from "@/store/subjects/types";
 import {KSQLServerInfoResponse} from "@/store/ksql/types";
 
 export const connectStatus: Action<RootState, RootState> = async ({state, commit }): Promise<void> => {
-    commit('loading', { component: 'connectStatus' });
+    commit('connectStatusLoading');
     try {
         const response = await Axios.get<any>(`${state.endpoints.connectApi}/`);
         commit('connectStatus', response.data);
     } catch (e) {
-        commit('error', { component: 'connectStatus', error: e });
+        commit('connectStatusError', { error: e });
     }
-
-    commit('loading', { component: 'connectStatus', loading: false });
 };
 
 export const schemaRegistryStatus: Action<RootState, RootState> = async ({state, commit }): Promise<void> => {
-    commit('loading', { component: 'schemaRegistryStatus' });
+    const url = `${state.endpoints.schemaRegistryApi}/config`;
+    commit('schemaRegistryStatusLoading', { component: 'schemaRegistryStatus' });
     try {
-        const response = await Axios.get<GlobalConfiguration>(`${state.endpoints.schemaRegistryApi}/config`);
+        const response = await Axios.get<GlobalConfiguration>(url);
         commit('schemaRegistryStatus', response.data);
     } catch (e) {
-        commit('error', { component: 'schemaRegistryStatus', error: e });
+        commit('schemaRegistryStatusError', { error: e });
     }
-
-    commit('loading', { component: 'schemaRegistryStatus', loading: false });
 };
 
 
 export const kafkaStatus: Action<RootState, RootState> = async ({state, commit }): Promise<void> => {
-    commit('loading', { component: 'kafkaStatus' });
+    commit('kafkaStatusLoading');
     try {
         const response = await Axios.get<ClusterNode[]>(`${state.endpoints.adminApi}/v1/clusters/default/nodes`);
         commit('kafkaStatus', response.data);
     } catch (e) {
-        commit('error', { component: 'kafkaStatus', error: e });
+        commit('kafkaStatusError', { error: e });
     }
-
-    commit('loading', { component: 'kafkaStatus', loading: false });
 };
 
 export const ksqlStatus: Action<RootState, RootState> = async ({state, commit}): Promise<void> => {
     const url = `${state.endpoints.ksqlApi}/info`;
     commit('ksqlStatusLoading');
     try {
-        const response = await Axios.get<KSQLServerInfoResponse>(`${state.endpoints.ksqlApi}/info`, {
+        const response = await Axios.get<KSQLServerInfoResponse>(url, {
             headers: { "Accept": "application/vnd.ksql.v1+json" },
         });
         commit('ksqlStatus', response.data);

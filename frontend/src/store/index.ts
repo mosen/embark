@@ -7,7 +7,7 @@ import {ConsumerGroupsModule} from "@/store/consumer_groups";
 import {ConnectorsModule} from "@/store/connectors";
 import {ConnectorPluginsModule} from "@/store/connector_plugins";
 import {SubjectsModule} from "@/store/subjects";
-import {KSQLModule} from "@/store/ksql";
+// import {KSQLModule} from "@/store/ksql";
 import {CompatibilityLevel} from "@/store/subjects/types";
 
 import * as actions from "./actions";
@@ -75,7 +75,7 @@ export default new Vuex.Store<RootState>({
         connectors: ConnectorsModule,
         connectorPlugins: ConnectorPluginsModule,
         subjects: SubjectsModule,
-        ksql: KSQLModule,
+        // ksql: KSQLModule,
     },
     state: {
         endpoints: {

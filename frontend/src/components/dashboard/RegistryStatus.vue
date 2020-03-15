@@ -29,11 +29,11 @@ import {CompatibilityLevel} from "@/store/subjects/types";
 export default class RegistryStatus extends Vue {
 
     public get loading(): boolean {
-        return this.$store.getters.isLoading('schemaRegistryStatus');
+        return this.$store.state.registry.loading;
     }
 
     public get error(): Error | null {
-        return this.$store.getters.componentError('schemaRegistryStatus');
+        return this.$store.state.registry.error;
     }
 
     public get url(): string {
@@ -41,7 +41,7 @@ export default class RegistryStatus extends Vue {
     }
 
     public get compatibility(): CompatibilityLevel | null {
-        return this.$store.state.registry.compatibility.compatibilityLevel;
+        return this.$store.state.registry.compatibility?.compatibilityLevel;
     }
 
     public created() {

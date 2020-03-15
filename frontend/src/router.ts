@@ -79,11 +79,11 @@ export default new Router({
             component: (): Promise<typeof import('*.vue')> =>
                 import(/* webpackChunkName: "subject" */ './views/Subject.vue'),
         },
-        {
-            path: '/ksql',
-            name: 'ksql',
-            component: (): Promise<typeof import('*.vue')> =>
-                import(/* webpackChunkName: "ksql" */ './views/KSQL.vue'),
-        }
+        // {
+        //     path: '/ksql',
+        //     name: 'ksql',
+        //     component: (): Promise<typeof import('*.vue')> =>
+        //         import(/* webpackChunkName: "ksql" */ './views/KSQL.vue'),
+        // }
     ],
 });
