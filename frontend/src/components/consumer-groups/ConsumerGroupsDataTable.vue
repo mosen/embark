@@ -19,7 +19,7 @@
 <script lang="ts">
 import {Component, Prop, Vue} from 'vue-property-decorator';
 import {ConsumerGroup} from "@/store/consumer_groups/types";
-import {TableHeader} from 'vuetify/src/components/VDataTable/mixins/header';
+import {DataTableHeader} from "vuetify";
 
 interface TableRow {
     groupId: string;
@@ -38,7 +38,7 @@ export default class ConsumerGroupsDataTable extends Vue {
     @Prop(Boolean)
     public loading!: boolean;
 
-    public headers: TableHeader[] = [
+    public headers: DataTableHeader[] = [
         {
             text: "Name",
             value: "groupId"

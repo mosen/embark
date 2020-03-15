@@ -20,7 +20,7 @@
 
 <script lang="ts">
 import {Component, Prop, Vue} from 'vue-property-decorator';
-import {TableHeader} from 'vuetify/src/components/VDataTable/mixins/header';
+import {DataTableHeader} from "vuetify";
 
 interface TableRow {
     task: string;
@@ -38,7 +38,7 @@ export default class ConnectorTasksDataTable extends Vue {
     @Prop(Boolean)
     public loading!: boolean;
 
-    public headers: TableHeader[] = [
+    public headers: DataTableHeader[] = [
         {
             text: "Task",
             value: "task"

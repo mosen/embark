@@ -39,15 +39,15 @@ import { Component, Vue } from 'vue-property-decorator';
 export default class BrokerStatus extends Vue {
 
     public get loading(): boolean {
-        return this.$store.state.connect.loading;
+        return this.$store.getters.isLoading('kafkaStatus');
+    }
+
+    public get error(): Error | null {
+        return this.$store.getters.componentError('kafkaStatus');
     }
 
     public get nodes(): string {
         return this.$store.state.cluster.nodes || [];
-    }
-
-    public get error(): string {
-        return this.$store.state.cluster.error;
     }
 
     // public get clusterId(): string {
@@ -55,7 +55,7 @@ export default class BrokerStatus extends Vue {
     // }
 
     public created() {
-        this.$store.dispatch('fetchClusterInfo');
+        this.$store.dispatch('kafkaStatus');
     }
 }
 </script>

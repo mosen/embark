@@ -45,7 +45,7 @@ export default class Subject extends Vue {
     public tabs = "subject-tabs-1";
 
     public mounted(): void {
-        this.$store.dispatch('subjectSchemaVersion', { subject: this.$route.params.name, version: this.$route.params.version });
+        this.$store.dispatch('schemaVersion', { subject: this.$route.params.name, version: this.$route.params.version });
         this.$store.dispatch('schemaVersions', this.$route.params.name);
     }
 

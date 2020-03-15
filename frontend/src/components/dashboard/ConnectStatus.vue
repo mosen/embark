@@ -50,7 +50,11 @@ import { Component, Vue } from 'vue-property-decorator';
 export default class ConnectStatus extends Vue {
 
     public get loading(): boolean {
-        return this.$store.state.connect.loading;
+        return this.$store.getters.isLoading('connectStatus');
+    }
+
+    public get error(): Error | null {
+        return this.$store.getters.componentError('connectStatus');
     }
 
     public get url(): string {
@@ -70,12 +74,8 @@ export default class ConnectStatus extends Vue {
         return this.$store.state.connect.kafka_cluster_id || "";
     }
 
-    public get error(): boolean {
-        return this.$store.state.connect.error;
-    }
-
     public created(): void {
-        this.$store.dispatch('fetchConnectInfo');
+        this.$store.dispatch('connectStatus');
     }
 }
 </script>

@@ -51,7 +51,6 @@
 
 <script lang="ts">
 import {Component, Vue} from 'vue-property-decorator';
-import {VuetifyRuleValidator} from 'vuetify/src/mixins/validatable/index';
 import {NewTopic} from "@/store/topics/types";
 
 @Component({
@@ -63,12 +62,12 @@ export default class NewTopicDialog extends Vue {
     private name: string = "";
     private replicas: number = 1;
     private partitions: number = 1;
-    private rules: { [ruleName: string]: VuetifyRuleValidator } = {
-        required: value => !!value || 'Required.',
-        counter: value => value.length <= 249 || 'Max 249 characters',
-        charset: value => /[^a-zA-Z0-9._-]+/.test(value) && 'Must only contain alphanumeric characters, dot (.), underscore (_) or dash (-)',
-        maxBrokers: value => (value <= 2) || 'Cannot specify more than the number of available broker(s): 2',
-    };
+    // private rules: { [ruleName: string]: VuetifyVali } = {
+    //     required: value => !!value || 'Required.',
+    //     counter: value => value.length <= 249 || 'Max 249 characters',
+    //     charset: value => /[^a-zA-Z0-9._-]+/.test(value) && 'Must only contain alphanumeric characters, dot (.), underscore (_) or dash (-)',
+    //     maxBrokers: value => (value <= 2) || 'Cannot specify more than the number of available broker(s): 2',
+    // };
 
     public dismiss() {
         this.dialog = false;

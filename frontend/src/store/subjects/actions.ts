@@ -10,72 +10,68 @@ const headers = {
     "Accept": "application/vnd.schemaregistry.v1+json"
 };
 
+// Fetch a list of subjects.
 export const subjects: SubjectAction = async ({commit, rootState}): Promise<void> => {
-    commit('subjectsRequested', { name });
+    commit('loading', { component: 'subjects' });
     try {
         const response = await Axios.get<string[]>(`${rootState.endpoints.schemaRegistryApi}/subjects`, {
             headers,
         });
-        commit('subjectsReplace', response.data);
+        commit('subjects', response.data);
+        commit('error', { component: 'subjects' });
     } catch (e) {
-        commit('subjectsError', e);
+        commit('error', { component: 'subjects', error: e });
     }
+
+    commit('loading', { component: 'subjects', loading: false });
 };
 
-export const subjectSchemaVersion: SubjectAction =
-    async ({commit, rootState}, { subject, version = "latest" }: { subject: string; version: string }): Promise<void> => {
+export interface SchemaVersionPayload {
+    subject: string;
+    version: string;
+}
 
-    commit('subjectSchemaVersionRequested', { subject, version });
+// Fetch a specific version of a schema for the given subject.
+export const schemaVersion: SubjectAction =
+    async ({commit, rootState}, { subject, version = "latest" }: SchemaVersionPayload): Promise<void> => {
+
+    commit('loading', { component: 'schemaVersion', subject, version, loading: true });
     try {
         const response = await Axios.get<SchemaDetail>(
             `${rootState.endpoints.schemaRegistryApi}/subjects/${ subject }/versions/${ version }`,
             { headers }
             );
-        commit('subjectSchemaVersionReplace', response.data);
+        commit('schemaVersion', response.data);
+        commit('error', { component: 'schemaVersion' });
     } catch (e) {
-        commit('subjectSchemaVersionError', e);
+        commit('error', { component: 'schemaVersion', error: e });
     }
+
+    commit('loading', { component: 'schemaVersion', loading: false });
 };
 
+// Fetch a list of available schema versions for a specific subject.
 export const schemaVersions: SubjectAction =
     async ({commit, rootState}, subject: string): Promise<void> => {
 
-        commit('schemaVersionsRequested', { subject });
+        commit('loading', { component: 'schemaVersions', subject, loading: true });
         try {
             const response = await Axios.get<SchemaDetail>(
                 `${rootState.endpoints.schemaRegistryApi}/subjects/${ subject }/versions`,
                 { headers }
             );
-            commit('schemaVersionsReplace', response.data);
+            commit('schemaVersions', response.data);
         } catch (e) {
-            commit('schemaVersionsError', e);
+            commit('error', { component: 'schemaVersions', error: e });
         }
 };
 
+// Given a topic name, check to see whether the key and value schemas are available.
 export const topicSchemas: SubjectAction =
-    async ({commit, rootState}, topic: string, version = "latest"): Promise<void> => {
+    async ({commit, rootState, dispatch}, topic: string, version = "latest"): Promise<void> => {
 
-        commit('topicSchemasRequested', { topic, version });
+        commit('loading', { component: 'topicSchemas', topic, loading: true });
 
-        try {
-            commit('topicKeySchemaRequested', { topic, version });
-            const keyResponse = await Axios.get<SchemaDetail>(
-                `${rootState.endpoints.schemaRegistryApi}/subjects/${ topic }-key/versions/${ version }`,
-                { headers }
-            );
-            commit('topicKeySchemaReplace', keyResponse.data);
-        } catch (e) {
-            commit('topicKeySchemaError', e);
-        }
-
-        try {
-            commit('topicValueSchemaRequested', { topic, version });
-            const valueResponse = await Axios.get<SchemaDetail>(
-                `${rootState.endpoints.schemaRegistryApi}/subjects/${ topic }-value/versions/${ version }`,
-                { headers }
-            );
-            commit('topicValueSchemaReplace', valueResponse.data);
-        } catch (e) {
-            commit('topicValueSchemaError', e);
-        }
+        const keySchema = await dispatch("schemaVersion", { subject: `${ topic }-key`, version });
+        const valueSchema = await dispatch("schemaVersion", { subject: `${ topic }-value`, version });
 };

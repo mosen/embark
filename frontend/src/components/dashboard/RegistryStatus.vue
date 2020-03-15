@@ -12,8 +12,8 @@
             <v-list v-else class="transparent">
                 <v-list-item>
                     <v-list-item-content>
-                        <v-list-item-title>{{ compatibility }}</v-list-item-title>
-                        <v-list-item-subtitle>Global Compatibility Level</v-list-item-subtitle>
+                        <v-list-item-title>Global Compatibility Level</v-list-item-title>
+                        <v-list-item-subtitle>{{ compatibility }}</v-list-item-subtitle>
                     </v-list-item-content>
                 </v-list-item>
             </v-list>
@@ -25,14 +25,15 @@
 import { Component, Vue } from 'vue-property-decorator';
 import {CompatibilityLevel} from "@/store/subjects/types";
 
-@Component({
-    components: {
-    },
-})
+@Component({})
 export default class RegistryStatus extends Vue {
 
     public get loading(): boolean {
-        return this.$store.state.registry.loading;
+        return this.$store.getters.isLoading('schemaRegistryStatus');
+    }
+
+    public get error(): Error | null {
+        return this.$store.getters.componentError('schemaRegistryStatus');
     }
 
     public get url(): string {
@@ -43,12 +44,8 @@ export default class RegistryStatus extends Vue {
         return this.$store.state.registry.compatibility.compatibilityLevel;
     }
 
-    public get error(): boolean {
-        return this.$store.state.registry.error;
-    }
-
     public created() {
-        this.$store.dispatch('fetchRegistryInfo');
+        this.$store.dispatch('schemaRegistryStatus');
     }
 }
 </script>

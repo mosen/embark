@@ -43,11 +43,11 @@ import { Component, Vue } from 'vue-property-decorator';
 export default class KSQLStatus extends Vue {
 
     public get loading(): boolean {
-        return this.$store.state.ksql.info.loading;
+        return this.$store.getters.isLoading('ksqlStatus');
     }
 
-    public get error(): string {
-        return this.$store.state.ksql.info.error;
+    public get error(): Error | null {
+        return this.$store.getters.componentError('ksqlStatus');
     }
 
     public get version(): string {
@@ -63,7 +63,7 @@ export default class KSQLStatus extends Vue {
     }
 
     public created() {
-        this.$store.dispatch('ksqlInfo');
+        this.$store.dispatch('ksqlStatus');
     }
 }
 </script>

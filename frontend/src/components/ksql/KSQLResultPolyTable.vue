@@ -8,7 +8,7 @@
 <script lang="ts">
     import {Vue, Component, Emit, Watch, Prop} from 'vue-property-decorator';
     import {KSQLStatementResult} from "@/store/ksql/types";
-    import {TableHeader} from "vuetify/src/components/VDataTable/mixins/header";
+    import {DataTableHeader} from "vuetify";
     import {polyHeaders} from "@/components/ksql/headers";
 
     const resultKeys: { [ksqlMetaType: string]: string } = {
@@ -24,7 +24,7 @@
         @Prop({ default: [] })
         private readonly results!: KSQLStatementResult[];
 
-        private get headers(): TableHeader[] {
+        private get headers(): DataTableHeader[] {
             return polyHeaders(this.results[0]["@type"]);
         }
 

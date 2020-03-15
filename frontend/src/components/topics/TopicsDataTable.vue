@@ -46,7 +46,7 @@
 
 <script lang="ts">
 import {Component, Prop, Vue, Watch} from 'vue-property-decorator';
-import {TableHeader} from 'vuetify/src/components/VDataTable/mixins/header';
+import {DataTableHeader} from "vuetify";
 import {TopicListing} from "@/store/topics/types";
 import {DataTableOptions} from "@/types/vuetify";
 import TopicsActionMenu from "./TopicsActionMenu.vue";
@@ -75,7 +75,7 @@ export default class TopicsDataTable extends Vue {
         return this.$store.state.topics.data ? this.$store.state.topics.data.total : 0;
     }
 
-    public headers: TableHeader[] = [
+    public headers: DataTableHeader[] = [
         // {
         //     text: "",
         //     value: "internal",

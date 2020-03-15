@@ -147,7 +147,7 @@ export default class NavigationDrawer extends Vue {
     }
 
     public set open(value: boolean) {
-        this.$store.commit("NAV_DRAWER_OPEN", value);
+        this.$store.commit("navDrawer", value);
     }
 
 }

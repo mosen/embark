@@ -16,7 +16,7 @@
 
 <script lang="ts">
 import {Component, Prop, Vue} from 'vue-property-decorator';
-import {TableHeader} from 'vuetify/src/components/VDataTable/mixins/header';
+import {DataTableHeader} from "vuetify";
 import {ConnectorPlugin} from "@/store/connector_plugins/types";
 
 interface TableRow {
@@ -37,7 +37,7 @@ export default class ConnectorPluginsDataTable extends Vue {
     @Prop(Boolean)
     public loading!: boolean;
 
-    public headers: TableHeader[] = [
+    public headers: DataTableHeader[] = [
         {
             text: "Type",
             value: "type"

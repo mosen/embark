@@ -76,15 +76,14 @@
 import {Component, Prop, Vue} from 'vue-property-decorator';
 import {Consumer, ConsumerGroupDescription, ConsumerGroupOffset} from '@/store/consumer_groups/types';
 import {Node} from "@/store/topics/types";
-import {TableHeader} from 'vuetify/src/components/VDataTable/mixins/header';
-
+import {DataTableHeader} from "vuetify";
 
 @Component({})
 export default class ConsumerGroup extends Vue {
 
     public tabs: string = "cg-tabs-1";
 
-    public consumerTableHeaders: TableHeader[] = [
+    public consumerTableHeaders: DataTableHeader[] = [
         {
             text: "Client ID",
             value: "clientId"
@@ -95,7 +94,7 @@ export default class ConsumerGroup extends Vue {
         }
     ];
 
-    public consumerOffsetTableHeaders: TableHeader[] = [
+    public consumerOffsetTableHeaders: DataTableHeader[] = [
         {
             text: "Topic",
             value: "topic"

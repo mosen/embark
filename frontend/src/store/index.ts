@@ -12,10 +12,18 @@ import {CompatibilityLevel} from "@/store/subjects/types";
 
 import * as actions from "./actions";
 import * as mutations from "./mutations";
+import * as getters from "./getters";
 import {KSQLServerInfoResponse} from "@/store/ksql/types";
 
 Vue.use(Vuex);
 
+export interface LoadingState {
+    [componentName: string]: boolean;
+}
+
+export interface ErrorsState {
+    [componentName: string]: Error | null;
+}
 
 export interface RootState {
     endpoints: {
@@ -25,9 +33,8 @@ export interface RootState {
         ksqlApi?: string;
     };
 
-    loading: boolean;
-    hasError: boolean;
-    error: Error | null;
+    loading: LoadingState;
+    errors: ErrorsState;
 
     snackbar: {
         open: boolean;
@@ -67,12 +74,12 @@ export interface RootState {
         error: boolean;
 
         info: KSQLServerInfoResponse | null;
-    }
+    };
 }
 
 export default new Vuex.Store<RootState>({
     modules: {
-        acl_bindings: AclBindingsModule,
+        aclBindings: AclBindingsModule,
         topics: TopicsModule,
         consumerGroups: ConsumerGroupsModule,
         connectors: ConnectorsModule,
@@ -88,9 +95,9 @@ export default new Vuex.Store<RootState>({
             ksqlApi: process.env.VUE_APP_KSQL,
         },
 
-        loading: false,
-        hasError: false,
-        error: null,
+        loading: {},
+        errors: {},
+
         snackbar: {
             open: false,
             text: ""
@@ -133,4 +140,5 @@ export default new Vuex.Store<RootState>({
     },
     mutations,
     actions,
+    getters,
 });

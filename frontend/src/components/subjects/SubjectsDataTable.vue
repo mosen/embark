@@ -45,7 +45,7 @@
 
 <script lang="ts">
 import {Component, Vue, Watch} from 'vue-property-decorator';
-import {TableHeader} from 'vuetify/src/components/VDataTable/mixins/header';
+import {DataTableHeader} from "vuetify";
 import {DataTableOptions} from "@/types/vuetify";
 
 
@@ -72,7 +72,7 @@ export default class SubjectsDataTable extends Vue {
         return this.$store.state.subjects.data ? this.$store.state.subjects.data.total : 0;
     }
 
-    public headers: TableHeader[] = [
+    public headers: DataTableHeader[] = [
         {
             text: "Name",
             value: "name"
