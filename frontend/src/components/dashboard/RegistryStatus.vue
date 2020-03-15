@@ -9,7 +9,7 @@
             <p v-if="error" class="headline text-center">
                 Unable to connect
             </p>
-            <v-list v-else class="transparent">
+            <v-list v-if="!error && !loading" class="transparent">
                 <v-list-item>
                     <v-list-item-content>
                         <v-list-item-title>Global Compatibility Level</v-list-item-title>

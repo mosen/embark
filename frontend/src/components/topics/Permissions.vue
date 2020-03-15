@@ -1,9 +1,9 @@
 <template>
     <v-list>
         <v-list-group
-                v-for="(permissions, principal) in principals"
-                :key="principal"
-                no-action
+            v-for="(permissions, principal) in principals"
+            :key="principal"
+            no-action
         >
             <template v-slot:activator>
                 <v-list-item-content>
@@ -43,7 +43,7 @@
 
 <script lang="ts">
     import {Component, Prop, Vue} from 'vue-property-decorator';
-    import AclBinding = Kafka.AclBinding;
+    import {AclBinding} from "@/types/acl";
 
     interface PrincipalPermissionEntry {
         permissionType: string;

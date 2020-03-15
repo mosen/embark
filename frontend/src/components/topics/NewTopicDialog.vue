@@ -52,6 +52,7 @@
 <script lang="ts">
 import {Component, Vue} from 'vue-property-decorator';
 import {NewTopic} from "@/store/topics/types";
+import {InputValidationRule, InputValidationRules} from "vuetify";
 
 @Component({
     components: {},
@@ -62,12 +63,12 @@ export default class NewTopicDialog extends Vue {
     private name: string = "";
     private replicas: number = 1;
     private partitions: number = 1;
-    // private rules: { [ruleName: string]: VuetifyVali } = {
-    //     required: value => !!value || 'Required.',
-    //     counter: value => value.length <= 249 || 'Max 249 characters',
-    //     charset: value => /[^a-zA-Z0-9._-]+/.test(value) && 'Must only contain alphanumeric characters, dot (.), underscore (_) or dash (-)',
-    //     maxBrokers: value => (value <= 2) || 'Cannot specify more than the number of available broker(s): 2',
-    // };
+    private rules: { [ruleName: string]: InputValidationRule } = {
+        required: value => !!value || 'Required.',
+        counter: value => value.length <= 249 || 'Max 249 characters',
+        charset: value => /[^a-zA-Z0-9._-]+/.test(value) && 'Must only contain alphanumeric characters, dot (.), underscore (_) or dash (-)',
+        maxBrokers: value => (value <= 2) || 'Cannot specify more than the number of available broker(s): 2',
+    };
 
     public dismiss() {
         this.dialog = false;
