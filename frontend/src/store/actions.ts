@@ -43,15 +43,14 @@ export const kafkaStatus: Action<RootState, RootState> = async ({state, commit }
 };
 
 export const ksqlStatus: Action<RootState, RootState> = async ({state, commit}): Promise<void> => {
-    commit('loading', { component: 'ksqlStatus' });
+    const url = `${state.endpoints.ksqlApi}/info`;
+    commit('ksqlStatusLoading');
     try {
         const response = await Axios.get<KSQLServerInfoResponse>(`${state.endpoints.ksqlApi}/info`, {
             headers: { "Accept": "application/vnd.ksql.v1+json" },
         });
         commit('ksqlStatus', response.data);
     } catch (e) {
-        commit('error', { component: 'ksqlStatus', error: e });
+        commit('ksqlStatusError', { error: e });
     }
-
-    commit('loading', { component: 'ksqlStatus', loading: false });
 };

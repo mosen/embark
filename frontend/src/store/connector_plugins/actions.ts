@@ -17,7 +17,7 @@ export const connectorPlugins: ConnectorPluginAction = async ({commit, rootState
     }
 };
 
-export const validateConnectorPlugin: ConnectorPluginAction = async({commit, rootState}, { classname, config }: { classname: string, config: any }): Promise<void> => {
+export const validateConnectorPlugin: ConnectorPluginAction = async({commit, rootState}, { classname, config }: { classname: string; config: Record<string, any> }): Promise<void> => {
     commit('validateConnectorPluginRequested', classname);
     try {
         const response = await Axios.put<ConnectorPluginValidationResult>(`${rootState.endpoints.connectApi}/connector-plugins/${classname}/config/validate`, config);

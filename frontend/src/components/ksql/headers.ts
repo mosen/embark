@@ -1,6 +1,11 @@
+import {DataTableHeader} from "vuetify";
 
 
-const map = {
+export interface PolymorphicHeaderMap {
+    [objectType: string]: () => DataTableHeader[];
+}
+
+const map: PolymorphicHeaderMap = {
     "kafka_topics": () => [
         {
             text: "Name",
@@ -49,10 +54,6 @@ const map = {
     ],
 };
 
-export const polyHeaders = (ksqlType: string): any => {
-    if (map.hasOwnProperty(ksqlType)) {
-        return map[ksqlType]();
-    } else {
-        return [];
-    }
+export const polyHeaders = (ksqlType: string): DataTableHeader[] => {
+    return map[ksqlType]() || [];
 };

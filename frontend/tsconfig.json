@@ -13,7 +13,6 @@
     "baseUrl": ".",
     "resolveJsonModule": true,
     "types": [
-      "vuetify",
       "webpack-env",
       "jest"
     ],

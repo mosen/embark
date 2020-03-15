@@ -36,10 +36,7 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 
-@Component({
-    components: {
-    },
-})
+@Component({})
 export default class KSQLStatus extends Vue {
 
     public get loading(): boolean {
@@ -62,7 +59,7 @@ export default class KSQLStatus extends Vue {
         return this.$store.state.ksql.info.data.KsqlServerInfo.ksqlServiceId;
     }
 
-    public created() {
+    public mounted() {
         this.$store.dispatch('ksqlStatus');
     }
 }

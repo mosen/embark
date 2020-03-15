@@ -12,17 +12,35 @@ import {CompatibilityLevel} from "@/store/subjects/types";
 
 import * as actions from "./actions";
 import * as mutations from "./mutations";
-import * as getters from "./getters";
-import {KSQLServerInfoResponse} from "@/store/ksql/types";
+
+import {KSQLServerInfo} from "@/store/ksql/types";
 
 Vue.use(Vuex);
 
-export interface LoadingState {
-    [componentName: string]: boolean;
+// For any REST service the following are present
+export interface EndpointState {
+    loading: boolean;
+    error: Error | null;
 }
 
-export interface ErrorsState {
-    [componentName: string]: Error | null;
+export interface KSQLEndpointState extends EndpointState {
+    info: KSQLServerInfo | null;
+}
+
+export interface KafkaState extends EndpointState {
+    nodes: string[];
+    clusterId: string;
+}
+
+export interface RegistryState extends EndpointState {
+    compatibility: CompatibilityLevel | null;
+}
+
+export interface ConnectState extends EndpointState {
+    version: string;
+    commit: string;
+    kafka_cluster_id: string;
+    url: string;
 }
 
 export interface RootState {
@@ -33,9 +51,6 @@ export interface RootState {
         ksqlApi?: string;
     };
 
-    loading: LoadingState;
-    errors: ErrorsState;
-
     snackbar: {
         open: boolean;
         text: string;
@@ -45,36 +60,11 @@ export interface RootState {
         open: boolean;
     };
 
-    connect: {
-        loading: boolean;
-        error: boolean;
-
-        version: string;
-        commit: string;
-        kafka_cluster_id: string;
-        url: string;
-    };
-
-    registry: {
-        loading: boolean;
-        error: boolean;
-        compatibility: CompatibilityLevel | null;
-    };
-
-    cluster: {
-        loading: boolean;
-        error: boolean;
-
-        nodes: string[];
-        clusterId: string;
-    };
-
-    ksqlInfo: {
-        loading: boolean;
-        error: boolean;
-
-        info: KSQLServerInfoResponse | null;
-    };
+    // High-level status information
+    connect: ConnectState;
+    registry: RegistryState;
+    cluster: KafkaState;
+    ksql: KSQLEndpointState;
 }
 
 export default new Vuex.Store<RootState>({
@@ -95,9 +85,6 @@ export default new Vuex.Store<RootState>({
             ksqlApi: process.env.VUE_APP_KSQL,
         },
 
-        loading: {},
-        errors: {},
-
         snackbar: {
             open: false,
             text: ""
@@ -109,36 +96,33 @@ export default new Vuex.Store<RootState>({
 
         connect: {
             loading: false,
-            error: false,
+            error: null,
 
             commit: "",
             kafka_cluster_id: "",
             version: "",
             url: "",
         },
-
         registry: {
             loading: false,
-            error: false,
+            error: null,
 
             compatibility: null,
         },
-
         cluster: {
             loading: false,
-            error: false,
+            error: null,
+
             clusterId: "",
             nodes: [],
         },
-
-        ksqlInfo: {
+        ksql: {
             loading: false,
-            error: false,
+            error: null,
 
             info: null,
         }
     },
     mutations,
     actions,
-    getters,
 });

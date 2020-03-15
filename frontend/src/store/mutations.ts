@@ -3,6 +3,11 @@ import {Mutation} from "vuex";
 import {RootState} from "@/store/index";
 import {ClusterNode, VersionResponse} from "@/store/types";
 import {CompatibilityLevel} from "@/store/subjects/types";
+import {KSQLServerInfoResponse} from "@/store/ksql/types";
+
+export interface ErrorPayload {
+    error: Error | null;
+}
 
 // Standard type definition for an exception handling mutation which sets an error on the state tree.
 export type ErrorMutation<S> = (state: S, payload: Error) => void;
@@ -26,6 +31,7 @@ export const connectStatus: Mutation<RootState> = (state, payload: VersionRespon
     state.connect.loading = false;
     state.connect.version = payload.version;
     state.connect.commit = payload.commit;
+    /* eslint camelcase: "off" */
     state.connect.kafka_cluster_id = payload.kafka_cluster_id;
     state.connect.url = payload.connectUrl;
 };
@@ -40,23 +46,24 @@ export const kafkaStatus: Mutation<RootState> = (state, payload: ClusterNode[]):
     state.cluster.nodes = payload.map((d: ClusterNode) => `${d.host}:${d.port}`);
 };
 
-// export const ksqlStatus: Mutation<RootState> = (state, payload: KSQLServerInfoResponse): void => {
-// };
 
-export interface LoadingMutationPayload {
-    component: string;
+
+export interface KSQLStatusLoadingPayload {
     loading?: boolean;
+    url?: string;
 }
 
-export const loading: Mutation<RootState> = (state, { component, loading }: LoadingMutationPayload): void => {
-    state.loading[component] = loading ?? true;
+export const ksqlStatusLoading: Mutation<RootState> = (state, payload: KSQLStatusLoadingPayload): void => {
+    state.ksql.loading = payload.loading ?? true;
 };
 
-export interface ErrorMutationPayload {
-    component: string;
-    error?: Error;
-}
+export const ksqlStatus: Mutation<RootState> = (state, payload: KSQLServerInfoResponse): void => {
+    state.ksql.info = payload.KsqlServerInfo;
+    state.ksql.loading = false;
+    state.ksql.error = null;
+};
 
-export const error: Mutation<RootState> = (state, { component, error }: ErrorMutationPayload): void => {
-    state.errors[component] = error ?? null;
+export const ksqlStatusError: Mutation<RootState> = (state, payload: ErrorPayload): void => {
+    state.ksql.error = payload.error;
+    state.ksql.loading = false;
 };
