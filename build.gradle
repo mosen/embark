@@ -6,9 +6,3 @@ buildscript {
 subprojects {
     apply plugin: 'java'
 }
-//
-//project(":admin") {
-//    dependencies {
-//        build(project(":security-saml2"))
-//    }
-//}

@@ -36,19 +36,3 @@ kafka:
 micronaut:
   security:
     enabled: true
-    saml2:
-      enabled: true
-#      contacts:
-#
-      services:
-        microsoft:
-          idp:
-            entityid: "<AAD Tenant Endpoint EntityID>"
-            sso-url: "<AAD Tenant SSO URL>"
-            slo-url: "<AAD Tenant SLO URL>"
-            certificate: "<Base64 Encoded DER Cert>"
-
-          sp:
-            entityid: "<AAD App Registration Client ID>"
-            assertion-consumer-path: /saml2/acs/microsoft
-            nameid-format: "urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress"

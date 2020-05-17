@@ -1,5 +1,4 @@
 rootProject.name = 'embark'
 
-include 'security-saml2'
 include 'admin'
 include 'frontend'

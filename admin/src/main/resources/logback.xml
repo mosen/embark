@@ -13,5 +13,4 @@
         <appender-ref ref="STDOUT" />
     </root>
 
-    <logger name="com.github.mosen.security.saml2.routes.Saml2RouteBuilder" level="DEBUG"/>
 </configuration>
